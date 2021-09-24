@@ -6,8 +6,9 @@
 
 ## General Info
 This browser based web application to ...
-* Hi my name is Shik. I'm excited about this project because the instructor is Hoda.
-
+Hello My name is Shey and I want to sleep
+* Hello My name is Shik and I like this project because this is first time having project
+	
 ## Technologies
 Technologies used for this project:
 * HTML, CSS
