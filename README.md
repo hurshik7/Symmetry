@@ -6,6 +6,7 @@
 
 ## General Info
 This browser based web application to ...
+Hello My name is Shey and I want to sleep
 	
 ## Technologies
 Technologies used for this project:
