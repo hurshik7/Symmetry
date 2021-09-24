@@ -6,7 +6,8 @@
 
 ## General Info
 This browser based web application to ...
-	
+* Hi my name is Shik. I'm excited about this project because the instructor is Hoda.
+
 ## Technologies
 Technologies used for this project:
 * HTML, CSS
