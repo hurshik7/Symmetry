@@ -71,6 +71,15 @@
     </div>
   </nav>
 
+  <div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+      <h2 class="display-5 fw-bold">Welcome! <span id="name-goes-here"></span></h2>
+      <p class="col-md-8 fs-4">Let's add your tasks!</p>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AssignmentModal">
+        Add assignment
+      </button>
+    </div>
+  </div>
 
   <!-- Modal -->
   <div class="modal fade" id="AssignmentModal" tabindex="-1" role="dialog" aria-labelledby="AssignmentModalLabel"
@@ -105,14 +114,7 @@
     </div>
   </div>
 
-  <div class="p-5 mb-4 bg-light rounded-3">
-    <div class="container-fluid py-5">
-      <h2 class="display-5 fw-bold">Welcome! <span id="name-goes-here"></span></h2>
-      <p class="col-md-8 fs-4">Let's add your tasks!</p>
-      <button class="btn btn-primary btn-lg" type="button">Add now</button>
-    </div>
-  </div>
-
+  <!--
   <div class="container">
     <div class="row">
       <div class="col">
@@ -149,6 +151,7 @@
       </div>
     </div>
   </div>
+  -->
 
   <!-- Optional JavaScript; choose one of the two! -->
 
@@ -167,29 +170,29 @@
     crossorigin="anonymous"></script>
   <script>
     function insertName() {
-            firebase.auth().onAuthStateChanged(user => {
-                // Check if user is signed in:
-                if (user) {
-                    // Do something for the current logged-in user here: 
-                    console.log(user.uid);
-                    //go to the correct user document by referencing to the user uid
-                    currentUser = db.collection("users").doc(user.uid);
-                    //get the document for current user.
-                    currentUser.get()
-                        .then(userDoc => {
-                            var user_Name = userDoc.data().name;
-                            console.log(user_Name);
-                            //method #1:  insert with html only
-                            //document.getElementById("name-goes-here").innerText = n;    //using javascript
-                            //method #2:  insert using jquery
-                            $("#name-goes-here").text(user_Name);                         //using jquery
-                        })
-                } else {
-                    // No user is signed in.
-                }
-            });
+      firebase.auth().onAuthStateChanged(user => {
+        // Check if user is signed in:
+        if (user) {
+          // Do something for the current logged-in user here: 
+          console.log(user.uid);
+          //go to the correct user document by referencing to the user uid
+          currentUser = db.collection("users").doc(user.uid);
+          //get the document for current user.
+          currentUser.get()
+            .then(userDoc => {
+              var user_Name = userDoc.data().name;
+              console.log(user_Name);
+              //method #1:  insert with html only
+              //document.getElementById("name-goes-here").innerText = n;    //using javascript
+              //method #2:  insert using jquery
+              $("#name-goes-here").text(user_Name);                         //using jquery
+            })
+        } else {
+          // No user is signed in.
         }
-        insertName();
+      });
+    }
+    insertName();
   </script>
 
   <!-- Option 2: Separate Popper and Bootstrap JS -->
