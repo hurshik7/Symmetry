@@ -108,8 +108,8 @@
                     <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
                 </div>
                 <div class="form-group">
-                    <label>School</label>
-                    <input type="text" id="schoolInput" class="form-control" placeholder="Enter your school">
+                    <label>birthplace</label>
+                    <input type="text" id="birthplaceInput" class="form-control" placeholder="Enter your birthplace">
                 </div>
                 <div class="form-group">
                     <label>City</label>
@@ -142,15 +142,15 @@
                         .then(userDoc => {
                             //get the data fields of the user
                             var userName = userDoc.data().name;
-                            var userSchool = userDoc.data().school;
+                            var userbirthplace = userDoc.data().birthplace;
                             var userCity = userDoc.data().city;
 
                             //if the data fields are not empty, then write them in to the form.
                             if (userName != null) {
                                 document.getElementById("nameInput").value = userName;
                             }
-                            if (userSchool != null) {
-                                document.getElementById("schoolInput").value = userSchool;
+                            if (userbirthplace != null) {
+                                document.getElementById("birthplaceInput").value = userbirthplace;
                             }
                             if (userCity != null) {
                                 document.getElementById("cityInput").value = userCity;
@@ -176,15 +176,15 @@ function saveUserInfo() {
 
     //grab values from the form that the user inserted in each field
     username = document.getElementById('nameInput').value;
-    school = document.getElementById('schoolInput').value;
+    birthplace = document.getElementById('birthplaceInput').value;
     city = document.getElementById('cityInput').value;
 
-    // console.log("values are:", name, school, city)
+    // console.log("values are:", name, birthplace, city)
 
     //write values in the database
     currentUser.update({
         name: username,
-        school: school,
+        birthplace: birthplace,
         city: city
     })
     document.getElementById('personalInfoFields').disabled = true;
