@@ -112,11 +112,27 @@
     var uiConfig = {
       callbacks: {
         signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-          // User successfully signed in.
-          // Return type determines whether we continue the redirect automatically
-          // or whether we leave that to developer to handle.
-          return true;
-        },
+                    // User successfully signed in.
+                    // Return type determines whether we continue the redirect automatically
+                    // or whether we leave that to developer to handle.
+                    var user = authResult.user; // get the logged-in user
+                    
+                    // determine whether the user is a new user or not
+                    if (authResult.additionalUserInfo.isNewUser) {
+                        db.collection("users").doc(user.uid).set({
+                            name: user.displayName,
+                            email: user.email
+                        }).then(function () {
+                            window.location.assign("main.html");
+                        })
+                        .catch(function (error) {
+                            console.log("error is " + error);
+                        })
+                    }else {
+                        return true;
+                    }
+                    return false;
+                },
         uiShown: function () {
           // The widget is rendered.
           // Hide the loader.
@@ -128,7 +144,7 @@
       signInSuccessUrl: 'main.html',
       signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
-        //firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         //firebase.auth.TwitterAuthProvider.PROVIDER_ID,
         //firebase.auth.GithubAuthProvider.PROVIDER_ID,
@@ -143,6 +159,7 @@
 
     // The start method will wait until the DOM is loaded.
     ui.start('#firebaseui-auth-container', uiConfig);
+
   </script>
 </body>
 
