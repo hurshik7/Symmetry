@@ -75,7 +75,7 @@
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Modal Add Assignment -->
   <div class="modal fade" id="AssignmentModal" tabindex="-1" role="dialog" aria-labelledby="AssignmentModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -98,13 +98,15 @@
                 <input type="text" id="ClassInput" class="form-control" placeholder="Enter your class" />
               </div>
               <div class="form-group">
+                <!-- Calendar -->
                 <label>Due date</label>
                 <div class="container">
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="form-group">
                         <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                          <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
+                          <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"
+                            id="DuedateInput" />
                           <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i>📅</div>
                           </div>
@@ -122,13 +124,13 @@
               <div class="form-group">
                 <label>Label Color</label>
                 <div class="color-buttons-container">
-                  <button type="button" class="btn btn-primary" id="blue"></button>
-                  <button type="button" class="btn btn-secondary" id="grey"></button>
-                  <button type="button" class="btn btn-success" id="green"></button>
-                  <button type="button" class="btn btn-danger" id="red"></button>
-                  <button type="button" class="btn btn-warning" id="yellow"></button>
-                  <button type="button" class="btn btn-info" id="turquoise"></button>
-                  <button type="button" class="btn btn-dark" id="black"></button>
+                  <botton type="button" class="btn btn-primary" id="blue" onclick="change_picked_color('blue');"></botton>
+                  <botton type="button" class="btn btn-secondary" id="grey" onclick="change_picked_color('grey');"></botton>
+                  <botoon type="button" class="btn btn-success" id="green" onclick="change_picked_color('green');"></botoon>
+                  <button type="button" class="btn btn-danger" id="red" onclick="change_picked_color('red');"></button>
+                  <button type="button" class="btn btn-warning" id="yellow" onclick="change_picked_color('yellow');"></button>
+                  <button type="button" class="btn btn-info" id="turquoise" onclick="change_picked_color('turquoise');"></button>
+                  <button type="button" class="btn btn-dark" id="black" onclick="change_picked_color('black');"></button>
                 </div>
               </div>
             </fieldset>
@@ -136,7 +138,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-primary" id="modal-save-button">Save changes</button>
         </div>
       </div>
     </div>
@@ -219,6 +221,29 @@
       });
     }
     insertName();
+
+    //Send the assignment information to firestore when users click 'save' button
+    var modalSaveBtn = document.querySelector('#modal-save-button');
+    var clikedColor = undefined;
+
+    function saveModalInfoToFirestore() {
+      assignmentName = document.querySelector('#AssignmentInput');
+      //console.log(assignmentName.value);
+      assignmentClass = document.querySelector('#ClassInput');
+      //console.log(assignmentClass.value);
+      assignmentDuedate = document.querySelector("#DuedateInput");
+      //console.log(assignmentDuedate.value);
+      assignmentColor = clikedColor;
+      //console.log(assignmentColor);
+    };
+
+    function change_picked_color(pickedColor = "blue") {
+      //console.log("Clicked!", pickedColor)
+      clikedColor = pickedColor;
+    };
+
+    modalSaveBtn.addEventListener('click', saveModalInfoToFirestore)
+
   </script>
 
   <!-- Tempus Dominus Bootstrap 4 -->
