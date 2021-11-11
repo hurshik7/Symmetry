@@ -1,0 +1,9 @@
+body {
+    background-image: url("../images/snow_mountain2.jpg");
+    background-repeat: no-repeat, repeat;
+    background-size: cover;
+  }
+
+  .button_colour {
+    background-color: #e3f2fd;
+  }
