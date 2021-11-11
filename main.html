@@ -91,7 +91,10 @@
             <fieldset class="mb-3" id="personalInfoFields">
               <div class="form-group">
                 <label>Name</label>
-                <input type="text" id="AssignmentInput" class="form-control" placeholder="Enter your assigment name" />
+                <div class="input-group has-validation">
+                  <input type="text" id="AssignmentInput" class="form-control"
+                    placeholder="Enter your assigment name" />
+                </div>
               </div>
               <div class="form-group">
                 <label>Class</label>
@@ -124,13 +127,19 @@
               <div class="form-group">
                 <label>Label Color</label>
                 <div class="color-buttons-container">
-                  <botton type="button" class="btn btn-primary" id="blue" onclick="change_picked_color('blue');"></botton>
-                  <botton type="button" class="btn btn-secondary" id="grey" onclick="change_picked_color('grey');"></botton>
-                  <botoon type="button" class="btn btn-success" id="green" onclick="change_picked_color('green');"></botoon>
+                  <button type="button" class="btn btn-primary" id="blue"
+                    onclick="change_picked_color('blue');"></button>
+                  <button type="button" class="btn btn-secondary" id="grey"
+                    onclick="change_picked_color('grey');"></button>
+                  <button type="button" class="btn btn-success" id="green"
+                    onclick="change_picked_color('green');"></button>
                   <button type="button" class="btn btn-danger" id="red" onclick="change_picked_color('red');"></button>
-                  <button type="button" class="btn btn-warning" id="yellow" onclick="change_picked_color('yellow');"></button>
-                  <button type="button" class="btn btn-info" id="turquoise" onclick="change_picked_color('turquoise');"></button>
-                  <button type="button" class="btn btn-dark" id="black" onclick="change_picked_color('black');"></button>
+                  <button type="button" class="btn btn-warning" id="yellow"
+                    onclick="change_picked_color('yellow');"></button>
+                  <button type="button" class="btn btn-info" id="turquoise"
+                    onclick="change_picked_color('turquoise');"></button>
+                  <button type="button" class="btn btn-dark" id="black"
+                    onclick="change_picked_color('black');"></button>
                 </div>
               </div>
             </fieldset>
@@ -138,7 +147,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="modal-save-button">Save changes</button>
+          <button type="submit" class="btn btn-primary" id="modal-save-button">Save changes</button>
         </div>
       </div>
     </div>
@@ -196,13 +205,17 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
     integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
     crossorigin="anonymous"></script>
+
   <script>
+    var currentUserID = undefined;
+
     function insertName() {
       firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
         if (user) {
           // Do something for the current logged-in user here: 
           console.log(user.uid);
+          currentUserID = user.uid;
           //go to the correct user document by referencing to the user uid
           currentUser = db.collection("users").doc(user.uid);
           //get the document for current user.
@@ -228,13 +241,27 @@
 
     function saveModalInfoToFirestore() {
       assignmentName = document.querySelector('#AssignmentInput');
-      //console.log(assignmentName.value);
+      console.log(assignmentName.value);
       assignmentClass = document.querySelector('#ClassInput');
-      //console.log(assignmentClass.value);
+      console.log(assignmentClass.value);
       assignmentDuedate = document.querySelector("#DuedateInput");
-      //console.log(assignmentDuedate.value);
+      console.log(assignmentDuedate.value);
       assignmentColor = clikedColor;
-      //console.log(assignmentColor);
+      console.log(assignmentColor)
+
+      var userAssignment = db.collection("Assignments").doc(currentUserID);
+      userAssignment.update({
+        count: firebase.firestore.FieldValue.increment(1)
+      }).then(function () {
+        console.log("assignment count +1");
+      })
+        .catch(function (error) {
+          console.log("Error increaing assignment count: " + error);
+        });
+
+      //I am working on it here!
+      //I am working on it!
+      //Need to update assignment data to firestore!
     };
 
     function change_picked_color(pickedColor = "blue") {
