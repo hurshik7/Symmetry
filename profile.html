@@ -2,195 +2,161 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>DTC09 Symmetry</title>
-    <meta name="comp1800 template" content="my bcit Hiking App project">
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Bootstrap FirebaseUI CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
 
-    <!-- Firebase 8 CDNs-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <title>DTC09 Symmetry</title>
 
-    <!-- Link to the api keys for your firebase project -->
-    <script src="/scripts/firebaseAPI.js"></script>
+  <!-- Firebase 8 CDNs -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+
+  <script src="/scripts/firebaseAPI.js"></script>
 
 </head>
 
 <body>
-    <!--Navbar-->
-      <nav class="navbar navbar-light" style="background-color: #e3f2fd">
-        <div class="container-fluid">
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarTogglerDemo03"
-            aria-controls="navbarTogglerDemo03"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
+  <!--Navbar-->
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a href="main.html"><img src="images/logo.png" width="100" height="auto" /></a>
+      <button type="button" class="btn btn-outline-info">&#10133;</button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="settings.html">Setting ⚙️</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Make Folder 📁</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Add module ➕</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Dark Mode 🌙</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="profile.html">Profile 👤</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="login.html">Log-in / Log-out ✏️
+            </a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+          <button class="btn btn-outline-success" type="submit">
+            Search
           </button>
-          <a href="#"><img src="images/logo.png" width="100" height="auto" /></a>
-          <button type="button" class="btn btn-outline-info">&#10133;</button>
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="settings.html"
-                  >Setting ⚙️</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"
-                  >Make Folder 📁</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"
-                  >Add module ➕</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"
-                  >Dark Mode 🌙</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="profile.html"
-                  >Profile 👤</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="login.html"
-                  >Log-in / Sign-up ✏️
-                </a>
-              </li>
-              <!--
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-              -->
-            </ul>
-            <form class="d-flex">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
-          </div>
-        </div>
-      </nav>
-
-    <div class="container">
-        <h1>User Profile </h1>
-        <form>
-            <fieldset class="mb-3" id="personalInfoFields" disabled>
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
-                </div>
-                <div class="form-group">
-                    <label>School</label>
-                    <input type="text" id="schoolInput" class="form-control" placeholder="Enter your school">
-                </div>
-                <div class="form-group">
-                    <label>City</label>
-                    <input type="text" id="cityInput" class="form-control" placeholder="Enter your city">
-                </div>
-            </fieldset>
-            <div class="d-flex justify-content-end mt-5">
-                <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
-                <span style="width: 10px"></span>
-                <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
-            </div>
         </form>
+      </div>
     </div>
+  </nav>
 
-    <!--------------------------------------------------------------------->
-    <!-- JS files: Your own JavaScript functions included here    -->
-    <!--------------------------------------------------------------------->
-    <script>
-        var currentUser;
+  <div class="container">
+    <h1>User Profile </h1>
+    <form>
+      <fieldset class="mb-3" id="personalInfoFields" disabled>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+          <label>Birthplace</label>
+          <input type="text" id="birthplaceInput" class="form-control" placeholder="Enter your Birthplace">
+        </div>
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" id="cityInput" class="form-control" placeholder="Enter your city">
+        </div>
+      </fieldset>
+      <div class="d-flex justify-content-end mt-5">
+        <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
+        <span style="width: 10px"></span>
+        <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
+      </div>
+    </form>
+  </div>
 
-        function populateInfo() {
-            firebase.auth().onAuthStateChanged(user => {
-                // Check if user is signed in:
-                if (user) {
+  <!--------------------------------------------------------------------->
+  <!-- JS files: Your own JavaScript functions included here    -->
+  <!--------------------------------------------------------------------->
+  <script>
+    var currentUser;
 
-                    //go to the correct user document by referencing to the user uid
-                    currentUser = db.collection("users").doc(user.uid)
-                    //get the document for current user.
-                    currentUser.get()
-                        .then(userDoc => {
-                            //get the data fields of the user
-                            var userName = userDoc.data().name;
-                            var userSchool = userDoc.data().school;
-                            var userCity = userDoc.data().city;
+    function populateInfo() {
+      firebase.auth().onAuthStateChanged(user => {
+        // Check if user is signed in:
+        if (user) {
 
-                            //if the data fields are not empty, then write them in to the form.
-                            if (userName != null) {
-                                document.getElementById("nameInput").value = userName;
-                            }
-                            if (userSchool != null) {
-                                document.getElementById("schoolInput").value = userSchool;
-                            }
-                            if (userCity != null) {
-                                document.getElementById("cityInput").value = userCity;
-                            }
-                        })
-                } else {
-                    // No user is signed in.
-                    console.log("No user is signed in");
-                }
-            });
+          //go to the correct user document by referencing to the user uid
+          currentUser = db.collection("users").doc(user.uid)
+          //get the document for current user.
+          currentUser.get()
+            .then(userDoc => {
+              //get the data fields of the user
+              var userName = userDoc.data().name;
+              var userbirthplace = userDoc.data().birthplace;
+              var userCity = userDoc.data().city;
+
+              //if the data fields are not empty, then write them in to the form.
+              if (userName != null) {
+                document.getElementById("nameInput").value = userName;
+              }
+              if (userbirthplace != null) {
+                document.getElementById("birthplaceInput").value = userbirthplace;
+              }
+              if (userCity != null) {
+                document.getElementById("cityInput").value = userCity;
+              }
+            })
+        } else {
+          // No user is signed in.
+          console.log("No user is signed in");
         }
-
-        //call the function to run it 
-        populateInfo();
-
-        function editUserInfo() {
-   //Enable the form fields
-   document.getElementById('personalInfoFields').disabled = false;
-        }
-
-function saveUserInfo() {
-    // console.log("save is clicked")
-
-    //grab values from the form that the user inserted in each field
-    username = document.getElementById('nameInput').value;
-    school = document.getElementById('schoolInput').value;
-    city = document.getElementById('cityInput').value;
-
-    // console.log("values are:", name, school, city)
-
-    //write values in the database
-    currentUser.update({
-        name: username,
-        school: school,
-        city: city
-    })
-    document.getElementById('personalInfoFields').disabled = true;
+      });
     }
 
-    </script>
+    //call the function to run it 
+    populateInfo();
+
+    function editUserInfo() {
+      //Enable the form fields
+      document.getElementById('personalInfoFields').disabled = false;
+    }
+
+    function saveUserInfo() {
+      // console.log("save is clicked")
+
+      //grab values from the form that the user inserted in each field
+      username = document.getElementById('nameInput').value;
+      birthplace = document.getElementById('birthplaceInput').value;
+      city = document.getElementById('cityInput').value;
+
+      // console.log("values are:", name, birthplace, city)
+
+      //write values in the database
+      currentUser.update({
+        name: username,
+        birthplace: birthplace,
+        city: city
+      })
+      document.getElementById('personalInfoFields').disabled = true;
+    }
+
+  </script>
 
 
 

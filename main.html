@@ -14,10 +14,13 @@
 
   <!-- Firebase 8 CDNs -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+
+  <script src="/scripts/firebaseAPI.js"></script>
+
 </head>
 
 <body>
@@ -27,8 +30,9 @@
         aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a href="#"><img src="images/logo.png" width="100" height="auto" /></a>
-      <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#AssignmentModal">&#10133;</button>
+      <a href="#"><img src="images/logo.png" width="100" height="auto" alt="symmetry_logo" /></a>
+      <button id="plus-button" type="button" class="btn btn-outline-primary" data-toggle="modal"
+        data-target="#AssignmentModal">&#10133;</button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
@@ -47,84 +51,109 @@
             <a class="nav-link active" aria-current="page" href="profile.html">Profile 👤</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="login.html">Log-in / Sign-up ✏️
+            <a class="nav-link active" aria-current="page" href="login.html">Log-in / Log-out ✏️
             </a>
           </li>
-          <!--
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-              -->
-            </ul>
-            <form class="d-flex">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
-          </div>
-        </div>
-      </nav>
-
-
-<!-- Modal -->
-<div class="modal fade" id="AssignmentModal" tabindex="-1" role="dialog" aria-labelledby="AssignmentModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="AssignmentModalLabel">Add an Assignment</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <fieldset class="mb-3" id="personalInfoFields">
-            <div class="form-group">
-              <label>Name</label>
-              <input
-                type="text"
-                id="AssignmentInput"
-                class="form-control"
-                placeholder="Enter your assigment name"
-              />
-            </div>
-            <div class="form-group">
-              <label>Class</label>
-              <input
-                type="text"
-                id="ClassInput"
-                class="form-control"
-                placeholder="Enter your class"
-              />
-            </div>
-          </fieldset>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+          <button class="btn btn-outline-success" type="submit">
+            Search
+          </button>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
     </div>
-  </div>
-</div>
+  </nav>
 
   <div class="p-5 mb-4 bg-light rounded-3">
     <div class="container-fluid py-5">
       <h2 class="display-5 fw-bold">Welcome! <span id="name-goes-here"></span></h2>
       <p class="col-md-8 fs-4">Let's add your tasks!</p>
-      <button class="btn btn-primary btn-lg" type="button">Add now</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AssignmentModal">
+        Add assignment
+      </button>
     </div>
   </div>
 
+  <!-- Modal Add Assignment -->
+  <div class="modal fade" id="AssignmentModal" tabindex="-1" role="dialog" aria-labelledby="AssignmentModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="AssignmentModalLabel">Add an Assignment</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <fieldset class="mb-3" id="personalInfoFields">
+              <div class="form-group">
+                <label>Name</label>
+                <div class="input-group has-validation">
+                  <input type="text" id="AssignmentInput" class="form-control"
+                    placeholder="Enter your assigment name" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Class</label>
+                <input type="text" id="ClassInput" class="form-control" placeholder="Enter your class" />
+              </div>
+              <div class="form-group">
+                <!-- Calendar -->
+                <label>Due date</label>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                          <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"
+                            id="DuedateInput" />
+                          <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i>📅</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <script type="text/javascript">
+                      $(function () {
+                        $('#datetimepicker1').datetimepicker();
+                      });
+                    </script>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Label Color</label>
+                <div class="color-buttons-container">
+                  <button type="button" class="btn btn-primary" id="blue"
+                    onclick="change_picked_color('blue');"></button>
+                  <button type="button" class="btn btn-secondary" id="grey"
+                    onclick="change_picked_color('grey');"></button>
+                  <button type="button" class="btn btn-success" id="green"
+                    onclick="change_picked_color('green');"></button>
+                  <button type="button" class="btn btn-danger" id="red" onclick="change_picked_color('red');"></button>
+                  <button type="button" class="btn btn-warning" id="yellow"
+                    onclick="change_picked_color('yellow');"></button>
+                  <button type="button" class="btn btn-info" id="turquoise"
+                    onclick="change_picked_color('turquoise');"></button>
+                  <button type="button" class="btn btn-dark" id="black"
+                    onclick="change_picked_color('black');"></button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" id="modal-save-button">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--
   <div class="container">
     <div class="row">
       <div class="col">
@@ -161,42 +190,36 @@
       </div>
     </div>
   </div>
-
-  <!-- Optional JavaScript; choose one of the two! -->
+  -->
 
   <!-- Option 1: Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  <script>
-    function insertName() {
-      firebase.auth().onAuthStateChanged(user => {
-        // Check if user is signed in:
-        if (user) {
-          // Do something for the current logged-in user here: 
-          console.log(user.uid);
-          //go to the correct user document by referencing to the user uid
-          currentUser = db.collection("users").doc(user.uid);
-          //get the document for current user.
-          currentUser.get()
-            .then(userDoc => {
-              var user_Name = userDoc.data().name;
-              console.log(user_Name);
-              //method #1:  insert with html only
-              //document.getElementById("name-goes-here").innerText = n;    //using javascript
-              //method #2:  insert using jquery
-              $("#name-goes-here").text(user_Name);                         //using jquery
-            })
-        } else {
-          // No user is signed in.
-        }
-      });
-    }
-    insertName();
-  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+    integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+    integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+
+  <!-- insertName, store information of assignment from Modal to firestore -->
+  <script src="/scripts/main.js"></script>
+
+  <!-- Tempus Dominus Bootstrap 4 -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"
+    integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA=="
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css"
+    integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg=="
+    crossorigin="anonymous" />
 
   <!-- Option 2: Separate Popper and Bootstrap JS -->
   <!--

@@ -28,17 +28,7 @@
   <!-- Link to the api keys for your firebase project -->
   <script src="scripts/firebaseAPI.js"></script>
 
-  <style>
-    body {
-      background-image: url("images/snow_mountain2.jpg");
-      background-repeat: no-repeat, repeat;
-      background-size: cover;
-    }
-
-    .button_colour {
-      background-color: #e3f2fd;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="./styles/login.css">
 </head>
 
 <body>
@@ -49,7 +39,7 @@
         aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a href="#"><img src="images/logo.png" width="100" height="auto"></a>
+      <a href="#"><img src="images/logo.png" width="100" height="auto" alt="symmetry_logo" /></a>
       <button type="button" class="btn btn-outline-info">&#10133;</button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -69,16 +59,8 @@
             <a class="nav-link active" aria-current="page" href="profile.html">Profile 👤</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Log-in / Sign-up ✏️ </a>
+            <a class="nav-link active" aria-current="page" href="#">Log-in / Log-out ✏️ </a>
           </li>
-          <!--
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-              </li>
-            -->
         </ul>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -127,9 +109,12 @@
           if (authResult.additionalUserInfo.isNewUser) {         //if new user
             db.collection("users").doc(user.uid).set({         //write to firestore. We are using the UID for the ID in users collection
               name: user.displayName,                    //"users" collection
-              email: user.email                          //with authenticated user's ID (user.uid)
+              email: user.email,                          //with authenticated user's ID (user.uid)
+            })
+            db.collection("Assignments").doc(user.uid).set({
+              count: 0
             }).then(function () {
-              console.log("New user added to firestore");
+              console.log("New user and user's assignment document added to firestore");
               window.location.assign("main.html");       //re-direct to main.html after signup
             })
               .catch(function (error) {
@@ -154,7 +139,7 @@
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         //firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-        //firebase.auth.GithubAuthProvider.PROVIDER_ID,
+        firebase.auth.GithubAuthProvider.PROVIDER_ID,
         firebase.auth.EmailAuthProvider.PROVIDER_ID,
         //firebase.auth.PhoneAuthProvider.PROVIDER_ID
       ],
@@ -166,7 +151,6 @@
 
     // The start method will wait until the DOM is loaded.
     ui.start('#firebaseui-auth-container', uiConfig);
-
   </script>
 </body>
 
