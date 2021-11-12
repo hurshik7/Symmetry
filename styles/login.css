@@ -7,3 +7,7 @@ body {
   .button_colour {
     background-color: #e3f2fd;
   }
+
+  #greeting_msg {
+    color: skyblue;
+  }
