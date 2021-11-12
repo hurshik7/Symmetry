@@ -1,4 +1,4 @@
-## My Web Application (Title)
+## Symmetry, BCIT CST 1st term COMP1800 team DTC09
 
 * [General info](#general-info)
 * [Technologies](#technologies)
@@ -15,7 +15,7 @@ Technologies used for this project:
 * HTML, CSS
 * JavaScript
 * Bootstrap 
-* ...
+* Firebase
 	
 ## Content
 Content of the project folder:
@@ -23,17 +23,21 @@ Content of the project folder:
 ```
  Top level of project folder: 
 ├── .gitignore               # Git ignore file
-├── index.html               # landing HTML file, this is what users see when you come to url
+├── login.html               # landing HTML file, this is what users ├── main.html  
+├── profile.html
+├── setting.html    
 └── README.md
 
 It has the following subfolders and files:
 ├── .git                     # Folder for git repo
 ├── images                   # Folder for images
-    /blah.jpg                # 
+    logo.png                 # logo
+    snow_mountain2.jpg  
 ├── scripts                  # Folder for scripts
-    /blah.js                 # 
+                             # 
 ├── styles                   # Folder for styles
-    /blah.css                # 
+    login.css                # 
+    main.css
 
 Firebase hosting files: 
 ├── .firebaserc...
