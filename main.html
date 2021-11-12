@@ -241,13 +241,13 @@
 
     function saveModalInfoToFirestore() {
       assignmentName = document.querySelector('#AssignmentInput');
-      console.log(assignmentName.value);
+      //console.log(assignmentName.value);
       assignmentClass = document.querySelector('#ClassInput');
-      console.log(assignmentClass.value);
+      //console.log(assignmentClass.value);
       assignmentDuedate = document.querySelector("#DuedateInput");
-      console.log(assignmentDuedate.value);
+      //console.log(assignmentDuedate.value);
       assignmentColor = clikedColor;
-      console.log(assignmentColor)
+      //console.log(assignmentColor)
 
       var userAssignment = db.collection("Assignments").doc(currentUserID);
       userAssignment.update({
@@ -259,9 +259,17 @@
           console.log("Error increaing assignment count: " + error);
         });
 
-      //I am working on it here!
-      //I am working on it!
-      //Need to update assignment data to firestore!
+    userAssignment.collection(assignmentClass.value).doc(assignmentName.value).set({
+      dueDate: assignmentDuedate.value,
+      labelColor: assignmentColor      
+    }).then(function() {
+      console.log("Assignment information update successfully!");
+      alert("Your assignment added");
+      window.location.assign("main.html");
+    })
+      .catch(function (error) {
+        console.log("Error updating assignment info: " + error);
+      })
     };
 
     function change_picked_color(pickedColor = "blue") {
