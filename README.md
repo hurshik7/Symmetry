@@ -34,7 +34,7 @@ It has the following subfolders and files:
     logo.png                 # logo
     snow_mountain2.jpg  
 ├── scripts                  # Folder for scripts
-                             # 
+    main.js                         # 
 ├── styles                   # Folder for styles
     login.css                # 
     main.css
