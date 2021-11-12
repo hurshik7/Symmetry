@@ -32,7 +32,7 @@
                 //console.log(assClass, assName, assDueDate, assLabelColor);
 
                 var cardTemplate = `
-                <a href="#"><div class="card text-white bg-${assLabelColor} mb-3" style="max-width: 18rem;">
+                <a href="#"><div class="card text-white bg-${assLabelColor} mb-3" style="max-width: 23rem;">
                 <div class="card-header">${assClass}</div>
                 <div class="card-body">
                   <h5 class="card-title">${assName}</h5>
