@@ -19,15 +19,34 @@
               //method #2:  insert using jquery
               $("#name-goes-here").text(user_Name);                         //using jquery
             })
-          
-            //get count
+
           currentAssignment = db.collection("Assignments").doc(user.uid).get()
             .then(function (snap) {
-              var aslist = snap.data().assList;
-              for (var obj in aslist) {
-                console.log(aslist[obj].name);
+              var asslist = snap.data().assList;
+              //console.log(asslist);
+              for (let i = 0; i < asslist.length; i++) {
+                assName = asslist[i].name;
+                assClass = asslist[i].class;
+                assDueDate = asslist[i].dueDate;
+                assLabelColor = asslist[i].labelColor;
+                //console.log(assClass, assName, assDueDate, assLabelColor);
+
+                var cardTemplate = `
+                <div class="card text-white bg-${assLabelColor} mb-3" style="max-width: 18rem;">
+                <div class="card-header">${assClass}</div>
+                <div class="card-body">
+                  <h5 class="card-title">${assName}</h5>
+                  <p class="card-text">Due date: ${assDueDate}</p>
+                </div>
+              </div>`;
+                //console.log(cardTemplate);
+                $('.card-container').append(cardTemplate);
               }
             })
+            .catch(function (error) {
+              console.log("Error inserting assignment card: " + error);
+            })
+
         } else {
           // No user is signed in.
         }
@@ -50,32 +69,28 @@
       assignmentColor = clikedColor;
       //console.log(assignmentColor)
 
+      assignmentMap = {"class": assignmentClass.value, "name": assignmentName.value, "dueDate": assignmentDuedate.value, "labelColor": assignmentColor};
+      console.log(assignmentMap);
+
       var userAssignment = db.collection("Assignments").doc(currentUserID);
       userAssignment.update({
-        count: firebase.firestore.FieldValue.increment(1)
+        count: firebase.firestore.FieldValue.increment(1),
+        assList: firebase.firestore.FieldValue.arrayUnion(assignmentMap)
       }).then(function () {
         console.log("assignment count +1");
+        console.log("assignment info added to firestore");
+        alert("Your assignment added!");
+        window.location.assign("main.html");
       })
         .catch(function (error) {
           console.log("Error increaing assignment count: " + error);
         });
-
-    userAssignment.collection(assignmentClass.value).doc(assignmentName.value).set({
-      dueDate: assignmentDuedate.value,
-      labelColor: assignmentColor
-    }).then(function() {
-      console.log("Assignment information update successfully!");
-      alert("Your assignment added");
-      window.location.assign("main.html");
-    })
-      .catch(function (error) {
-        console.log("Error updating assignment info: " + error);
-      })
     };
+      
 
-    function change_picked_color(pickedColor = "blue") {
+    function change_picked_color(pickedColor = "primary") {
       //console.log("Clicked!", pickedColor)
       clikedColor = pickedColor;
     };
 
-    modalSaveBtn.addEventListener('click', saveModalInfoToFirestore)
+    modalSaveBtn.addEventListener('click', saveModalInfoToFirestore);
