@@ -1,9 +1,13 @@
 body {
-    background-image: url("../images/snow_mountain2.jpg");
+    background-image: url("../images/5BGPortraitImage.jpg");
     background-repeat: no-repeat, repeat;
     background-size: cover;
   }
 
   .button_colour {
     background-color: #e3f2fd;
+  }
+
+  #greeting_msg {
+    color: skyblue;
   }
