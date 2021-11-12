@@ -1,10 +1,10 @@
-var currentUserID = undefined;
+  var currentUserID = undefined;
 
-    function insertName() {
+    function insertNameAndAssignments() {
       firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
         if (user) {
-          // Do something for the current logged-in user here: 
+          // Do something for the current logged-in user here:
           console.log(user.uid);
           currentUserID = user.uid;
           //go to the correct user document by referencing to the user uid
@@ -19,12 +19,22 @@ var currentUserID = undefined;
               //method #2:  insert using jquery
               $("#name-goes-here").text(user_Name);                         //using jquery
             })
+          
+            //get count
+          currentAssignment = db.collection("Assignments").doc(user.uid).get()
+            .then(function (snap) {
+              var aslist = snap.data().assList;
+              for (var obj in aslist) {
+                console.log(aslist[obj].name);
+              }
+            })
         } else {
           // No user is signed in.
         }
       });
     }
-    insertName();
+    insertNameAndAssignments();
+
 
     //Send the assignment information to firestore when users click 'save' button
     var modalSaveBtn = document.querySelector('#modal-save-button');
@@ -52,7 +62,7 @@ var currentUserID = undefined;
 
     userAssignment.collection(assignmentClass.value).doc(assignmentName.value).set({
       dueDate: assignmentDuedate.value,
-      labelColor: assignmentColor      
+      labelColor: assignmentColor
     }).then(function() {
       console.log("Assignment information update successfully!");
       alert("Your assignment added");
