@@ -13,3 +13,21 @@ a .card:hover {
     top: -2px;
     box-shadow: 0 4px 5px grey;
 }
+
+@media screen and (max-width: 800px) {
+    .card-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .card-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .card-container {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
