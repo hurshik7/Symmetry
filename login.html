@@ -28,6 +28,17 @@
   <!-- Link to the api keys for your firebase project -->
   <script src="scripts/firebaseAPI.js"></script>
 
+  <style>
+    body {
+      background-image: url("images/3BGPortraitImage.jpg");
+      background-repeat: no-repeat, repeat;
+      background-size: cover;
+    }
+
+    .button_colour {
+      background-color: #e3f2fd;
+    }
+  </style>
   <link rel="stylesheet" type="text/css" href="./styles/login.css">
 </head>
 
@@ -86,6 +97,14 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
+
+
+
+  
+<!--  -->
+
+
+<!--  -->
 
   <!-- Authentication -->
   <script>
@@ -151,6 +170,19 @@
 
     // The start method will wait until the DOM is loaded.
     ui.start('#firebaseui-auth-container', uiConfig);
+  </script>
+
+<script type="text/javascript">
+  //Javascript Created by Computerhope https://www.computerhope.com/
+  //store the quotations in arrays
+  var images = [],
+  index = 0;
+  images[0] = url("images/BGImage1");
+  images[1] = url("images/BGImage2");
+  images[2] = url("images/BGImage3");
+  index = Math.floor(Math.random() * images.length);
+  document.write(images[index]);
+  //done
   </script>
 </body>
 

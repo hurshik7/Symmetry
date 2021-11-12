@@ -8,7 +8,7 @@
 This browser based web application to ...
 * Hello My name is Shey and I want to sleep
 * Hello My name is Shik and I like this project because this is first time having project
-* Ethan J
+* Hello My name is Ethan and this is a message
 	
 ## Technologies
 Technologies used for this project:
