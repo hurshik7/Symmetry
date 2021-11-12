@@ -1,7 +1,7 @@
 ## Symmetry, BCIT CST 1st term COMP1800 team DTC09
 
 * [General info](#general-info)
-* [Technologies] Bootstrap(frontend), Firebase(backend)
+* [Technologies](#technologies)
 * [Contents](#content)
 
 ## General Info
