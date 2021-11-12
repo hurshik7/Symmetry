@@ -1,1 +1,6 @@
-/* hello */
+.card-container {
+    margin: 2%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 1em;
+}
