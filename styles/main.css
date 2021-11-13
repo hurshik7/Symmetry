@@ -40,12 +40,20 @@ a .card:hover {
     border-color: cutom-cor;
 }
 
+.bg-violet {
+    background-color: #6B5B95!important;
+}
+
 .btn-turquoise {
     color: #fff;
     background-color: turquoise;
     background-color: cutom-color;
     border-color: turquoise;
     border-color: cutom-cor;
+}
+
+.bg-turquoise {
+    background-color: turquoise!important;
 }
 
 .btn-dodgerblue {
@@ -56,12 +64,20 @@ a .card:hover {
     border-color: cutom-cor;
 }
 
+.bg-dodgerblue {
+    background-color: dodgerblue!important;
+}
+
 .btn-greenery {
     color: #fff;
     background-color: #88B04B;
     background-color: cutom-color;
     border-color: #88B04B;
     border-color: cutom-cor;
+}
+
+.bg-greenery {
+    background-color: #88B04B!important;
 }
 
 .btn-serenity {
@@ -72,10 +88,18 @@ a .card:hover {
     border-color: cutom-cor;
 }
 
+.bg-serenity {
+    background-color: #92A8D1!important;
+}
+
 .btn-quarts {
     color: black;
     background-color: #F7CAC9;
     background-color: cutom-color;
     border-color: #F7CAC9;
     border-color: cutom-cor;
+}
+
+.bg-quarts {
+    background-color: #F7CAC9;!important;
 }
