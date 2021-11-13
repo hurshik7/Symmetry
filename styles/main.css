@@ -31,3 +31,51 @@ a .card:hover {
         grid-template-columns: repeat(8, 1fr);
     }
 }
+
+.btn-violet {
+    color: #fff;
+    background-color: #6B5B95;
+    background-color: cutom-color;
+    border-color: #6B5B95;
+    border-color: cutom-cor;
+}
+
+.btn-turquoise {
+    color: #fff;
+    background-color: turquoise;
+    background-color: cutom-color;
+    border-color: turquoise;
+    border-color: cutom-cor;
+}
+
+.btn-dodgerblue {
+    color: #fff;
+    background-color: dodgerblue;
+    background-color: cutom-color;
+    border-color: dodgerblue;
+    border-color: cutom-cor;
+}
+
+.btn-greenery {
+    color: #fff;
+    background-color: #88B04B;
+    background-color: cutom-color;
+    border-color: #88B04B;
+    border-color: cutom-cor;
+}
+
+.btn-serenity {
+    color: black;
+    background-color: #92A8D1;
+    background-color: cutom-color;
+    border-color: #92A8D1;
+    border-color: cutom-cor;
+}
+
+.btn-quarts {
+    color: black;
+    background-color: #F7CAC9;
+    background-color: cutom-color;
+    border-color: #F7CAC9;
+    border-color: cutom-cor;
+}
