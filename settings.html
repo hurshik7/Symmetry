@@ -92,6 +92,13 @@
             Choose default colours for assigments
           </div>
         </div>
+        <div class="card">
+          <div class="card-body">
+            <label class="form-label" for="customFile">Choose custom background image</label>
+            <input type="file" class="form-control" id="customFile" />
+            <button type="submit">Upload image</button>
+          </div>
+        </div>
       </div>
     </div>
   </body>
@@ -130,6 +137,17 @@
       });
     }
     populateInfo();
+
+    var form = document.querySelector("form");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      var timestamp = Number(new Date());
+      var storageRef = firebase.storage().ref(timestamp.toString());
+      var $ = jQuery;
+      var file_data = $("#customFile").prop("files")[0];
+      storageRef.put(file_data)
+    })
+
 
     let dark = false;
     function darkmode(dark){
