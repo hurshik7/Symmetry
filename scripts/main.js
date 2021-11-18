@@ -82,7 +82,6 @@ function insertNameAndAssignments() {
 insertNameAndAssignments();
 
 //Send the assignment information to firestore when users click 'save' button
-var modalSaveBtn = document.querySelector("#modal-save-button");
 var clikedColor = undefined;
 
 function saveModalInfoToFirestore() {
@@ -127,8 +126,6 @@ function change_picked_color(pickedColor = "primary") {
   //console.log("Clicked!", pickedColor)
   clikedColor = pickedColor;
 }
-
-modalSaveBtn.addEventListener("click", saveModalInfoToFirestore);
 
 function change_picked_color(pickedColor = "primary") {
   //console.log("Clicked!", pickedColor)
@@ -184,38 +181,43 @@ function editModalContentAndFoundAss(assCs, assNm, assDd, assLc) {
 }
 
 function saveEditedInfoToFirestore() {
-  assignmentName = document.querySelector("#edit_AssignmentInput");
+  assignmentName = document.querySelector("#edit_assignment_name_here");
   //console.log(assignmentName.value);
-  assignmentClass = document.querySelector("#edit_ClassInput");
+  assignmentClass = document.querySelector("#edit_class_here");
   //console.log(assignmentClass.value);
-  assignmentDuedate = document.querySelector("#edit_DuedateInput");
+  assignmentDuedate = document.querySelector("#edit_due_date_here");
   //console.log(assignmentDuedate.value);
   assignmentColor = clikedColor;
-  //console.log(assignmentColor)
-
-
+  console.log(assignmentColor)
 
   let userID = getCurrentUserUid();
-  var userAssignment = db.collection("Assignments").doc(userID);
-  userAssignment
-    .update({
-      assList: firebase.firestore.FieldValue.arrayUnion(editedAssignmentMap),
-    })
+  var userAssignment = db.collection("Assignments").doc(userID).get().then(function (snap) {
+    var asslist = snap.data().assList;
+    asslist[clickedAssignmentIndex].class = assignmentClass.value;
+    asslist[clickedAssignmentIndex].name = assignmentName.value;
+    asslist[clickedAssignmentIndex].dueDate = assignmentDuedate.value;
+    asslist[clickedAssignmentIndex].labelColor = assignmentColor;
+
+    console.log(asslist[clickedAssignmentIndex].name);
+    console.log("Updated!");
+  })
     .then(function () {
       console.log("edited assignment info added to firestore");
       alert(
-        `Your assignment ${assignmentClass.value}, ${assignmentName.value} has been edited!`
+        `Your assignment has been edited!`
       );
       window.location.assign("main.html");
     })
     .catch(function (error) {
-      console.log("Error increaing assignment count: " + error);
+      console.log("Error editing assignment: " + error);
     });
 }
 
-modalSaveBtn.addEventListener("click", saveEditedInfoToFirestore);
-
-function delete_assignment() {
+function deleteAssignment() {
+  if (confirm("Are you sure to delete it?") == false) {
+    return;
+  };
+  
   let userID = getCurrentUserUid();
   var userAssignment = db.collection("Assignments").doc(userID);
   userAssignment.get().then(function (doc) {
@@ -224,8 +226,8 @@ function delete_assignment() {
         .update({
           count: firebase.firestore.FieldValue.increment(-1),
           assList: firebase.firestore.FieldValue.arrayRemove(
-            doc.data().assList[0]
-          ),
+            doc.data().assList[clickedAssignmentIndex]
+          )
         })
         .then(function () {
           console.log("assignment count -1");
@@ -236,3 +238,8 @@ function delete_assignment() {
     }
   });
 }
+
+var modalSaveBtn = document.querySelector("#modal-save-button");
+modalSaveBtn.addEventListener("click", saveModalInfoToFirestore);
+var editModalSaveBtn = document.querySelector("#edit-modal-save-button");
+editModalSaveBtn.addEventListener("click", saveEditedInfoToFirestore);
