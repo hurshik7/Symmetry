@@ -29,6 +29,9 @@
   <script src="scripts/firebaseAPI.js"></script>
 
   <link rel="stylesheet" type="text/css" href="./styles/login.css">
+
+
+
 </head>
 
 <body>
@@ -44,7 +47,7 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Setting ⚙️</a>
+            <a class="nav-link active" aria-current="page" href="#">Settings ⚙️</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Make Folder 📁</a>
@@ -162,16 +165,21 @@
     ui.start('#firebaseui-auth-container', uiConfig);
   </script>
 
-<script type="text/javascript">
+<script>
+
   // Random Number Generator
   var images = [],
   index = 0;
-  images[0] = url("images/BGImage1");
-  images[1] = url("images/BGImage2");
-  images[2] = url("images/BGImage3");
+  images[0] = url("images/1BGPortraitImage.jpg");
+  images[1] = url("images/2BGPortraitImage.jpg");
+  images[2] = url("images/3BGPortraitImage.jpg");
   index = Math.floor(Math.random() * images.length);
-  document.write(images[index]);
+
+  element.style.backgroundImage = images[index];
+
+  console.log(images[index])
   </script>
+  
 </body>
 
 </html>

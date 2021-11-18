@@ -1,4 +1,5 @@
   var currentUserID = undefined;
+  var currentUserName = undefined;
 
     function insertNameAndAssignments() {
       firebase.auth().onAuthStateChanged(user => {
@@ -17,30 +18,41 @@
               //method #1:  insert with html only
               //document.getElementById("name-goes-here").innerText = n;    //using javascript
               //method #2:  insert using jquery
+              currentUserName = user_Name;
               $("#name-goes-here").text(user_Name);                         //using jquery
             })
 
           currentAssignment = db.collection("Assignments").doc(user.uid).get()
             .then(function (snap) {
               var asslist = snap.data().assList;
-              //console.log(asslist);
-              for (let i = 0; i < asslist.length; i++) {
-                assName = asslist[i].name;
-                assClass = asslist[i].class;
-                assDueDate = asslist[i].dueDate;
-                assLabelColor = asslist[i].labelColor;
+
+              if (asslist.length != 0) {
+                //console.log($('#greeting-container').value);
+                $('#greeting-container').attr("class", "p-3 mb-2 bg-light rounded-3");
+                $('#greeting-container-2').attr("class", "container-fluid py-1");
+                $('#greeting-message').text("");
+                $('#greeting-heading').replaceWith(`<p class="col-md-5 fs-5" id="greeting-heading" style="font-weight: bold;">Welcome back! ${currentUserName}</p>`)
+
+                //console.log(asslist);
+                for (let i = 0; i < asslist.length; i++) {
+                  let assName = asslist[i].name;
+                  let assClass = asslist[i].class;
+                  let assDueDate = asslist[i].dueDate;
+                  let assLabelColor = asslist[i].labelColor;
                 //console.log(assClass, assName, assDueDate, assLabelColor);
 
-                var cardTemplate = `
-                <a href="#"><div class="card text-white bg-${assLabelColor} mb-3" style="max-width: 23rem;">
-                <div class="card-header">${assClass}</div>
-                <div class="card-body">
-                  <h5 class="card-title">${assName}</h5>
-                  <p class="card-text">Due date: ${assDueDate}</p>
-                </div>
-              </div></a>`;
-                //console.log(cardTemplate);
-                $('.card-container').append(cardTemplate);
+                  var cardTemplate = `
+                  <a id="${assClass + assName}" data-toggle="modal" data-target="#edit_AssignmentModal">
+                  <div class="card text-white bg-${assLabelColor} mb-3" style="max-width: 23rem;">
+                  <div class="card-header">${assClass}</div>
+                  <div class="card-body">
+                    <h5 class="card-title">${assName}</h5>
+                    <p class="card-text">Due date: ${assDueDate}</p>
+                  </div>
+                  </div></a>`;
+                  //console.log(cardTemplate);
+                  $('.card-container').append(cardTemplate);
+                }
               }
             })
             .catch(function (error) {
@@ -79,18 +91,28 @@
       }).then(function () {
         console.log("assignment count +1");
         console.log("assignment info added to firestore");
-        alert("Your assignment added!");
+        alert(`Your assignment ${assignmentClass.value}, ${assignmentName.value} is added!`);
         window.location.assign("main.html");
       })
         .catch(function (error) {
           console.log("Error increaing assignment count: " + error);
         });
     };
-      
+
 
     function change_picked_color(pickedColor = "primary") {
       //console.log("Clicked!", pickedColor)
       clikedColor = pickedColor;
     };
+    function delete_assignment() {
+      var userAssignment = db.collection("Assignments").doc(currentUserID);
+      userAssignment.get().then(function(doc) {
+        if (doc.exists) {
+            userAssignment.update({
+                "assList": firebase.firestore.FieldValue.arrayRemove(doc.data().assList[0])
+            });
+        }
+    })
+}
 
     modalSaveBtn.addEventListener('click', saveModalInfoToFirestore);
