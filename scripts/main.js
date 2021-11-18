@@ -104,5 +104,15 @@
       //console.log("Clicked!", pickedColor)
       clikedColor = pickedColor;
     };
+    function delete_assignment() {
+      var userAssignment = db.collection("Assignments").doc(currentUserID);
+      userAssignment.get().then(function(doc) {
+        if (doc.exists) {
+            userAssignment.update({
+                "assList": firebase.firestore.FieldValue.arrayRemove(doc.data().assList[0])
+            });
+        }
+    })
+}
 
     modalSaveBtn.addEventListener('click', saveModalInfoToFirestore);
