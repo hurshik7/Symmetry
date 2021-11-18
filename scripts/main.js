@@ -198,9 +198,8 @@ function saveEditedInfoToFirestore() {
     asslist[clickedAssignmentIndex].dueDate = assignmentDuedate.value;
     asslist[clickedAssignmentIndex].labelColor = assignmentColor;
 
-    console.log(asslist[clickedAssignmentIndex].name);
-    console.log("Updated!");
   })
+  
     .then(function () {
       console.log("edited assignment info added to firestore");
       alert(
@@ -230,8 +229,8 @@ function deleteAssignment() {
           )
         })
         .then(function () {
-          console.log("assignment count -1");
-          console.log("assignment data deleted from firestore");
+          //console.log("assignment count -1");
+          //console.log("assignment data deleted from firestore");
           alert(`Your assignment has been deleted!`);
           window.location.assign("main.html");
         });
