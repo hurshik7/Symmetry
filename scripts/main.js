@@ -106,7 +106,7 @@ function saveModalInfoToFirestore() {
       console.log("assignment count +1");
       console.log("assignment info added to firestore");
       alert(
-        `Your assignment ${assignmentClass.value}, ${assignmentName.value} is added!`
+        `Your assignment ${assignmentClass.value}, ${assignmentName.value} has been added!`
       );
       window.location.assign("main.html");
     })
@@ -121,6 +121,31 @@ function change_picked_color(pickedColor = "primary") {
 }
 
 modalSaveBtn.addEventListener("click", saveModalInfoToFirestore);
+
+function change_picked_color(pickedColor = "primary") {
+  //console.log("Clicked!", pickedColor)
+  clikedColor = pickedColor;
+}
+function delete_assignment() {
+  var userAssignment = db.collection("Assignments").doc(currentUserID);
+  userAssignment.get().then(function (doc) {
+    if (doc.exists) {
+      userAssignment
+        .update({
+          count: firebase.firestore.FieldValue.increment(-1),
+          assList: firebase.firestore.FieldValue.arrayRemove(
+            doc.data().assList[0]
+          ),
+        })
+        .then(function () {
+          console.log("assignment count -1");
+          console.log("assignment data deleted from firestore");
+          alert(`Your assignment has been deleted!`);
+          window.location.assign("main.html");
+        });
+    }
+  });
+}
 
 function edit_modal_content(assCs, assNm, assDd, assLc) {
   console.log(assCs, assNm, assDd, assLc);
