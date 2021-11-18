@@ -1,4 +1,5 @@
   var currentUserID = undefined;
+  var currentUserName = undefined;
 
     function insertNameAndAssignments() {
       firebase.auth().onAuthStateChanged(user => {
@@ -17,6 +18,7 @@
               //method #1:  insert with html only
               //document.getElementById("name-goes-here").innerText = n;    //using javascript
               //method #2:  insert using jquery
+              currentUserName = user_Name;
               $("#name-goes-here").text(user_Name);                         //using jquery
             })
 
@@ -29,7 +31,7 @@
                 $('#greeting-container').attr("class", "p-3 mb-2 bg-light rounded-3");
                 $('#greeting-container-2').attr("class", "container-fluid py-1");
                 $('#greeting-message').text("");
-                
+                $('#greeting-heading').replaceWith(`<p class="col-md-5 fs-5" id="greeting-heading" style="font-weight: bold;">Welcome back! ${currentUserName}</p>`)
 
                 //console.log(asslist);
                 for (let i = 0; i < asslist.length; i++) {
