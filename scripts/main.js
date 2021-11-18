@@ -91,7 +91,7 @@
       }).then(function () {
         console.log("assignment count +1");
         console.log("assignment info added to firestore");
-        alert(`Your assignment ${assignmentClass.value}, ${assignmentName.value} is added!`);
+        alert(`Your assignment ${assignmentClass.value}, ${assignmentName.value} has been added!`);
         window.location.assign("main.html");
       })
         .catch(function (error) {
@@ -109,7 +109,13 @@
       userAssignment.get().then(function(doc) {
         if (doc.exists) {
             userAssignment.update({
-                "assList": firebase.firestore.FieldValue.arrayRemove(doc.data().assList[0])
+              count: firebase.firestore.FieldValue.increment(-1),
+              "assList": firebase.firestore.FieldValue.arrayRemove(doc.data().assList[0])
+            }).then(function () {
+              console.log("assignment count -1");
+              console.log("assignment data deleted from firestore");
+              alert(`Your assignment has been deleted!`);
+              window.location.assign("main.html");
             });
         }
     })
