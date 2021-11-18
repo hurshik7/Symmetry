@@ -67,10 +67,10 @@
     </div>
   </nav>
 
-  <div class="p-5 mb-4 bg-light rounded-3">
-    <div class="container-fluid py-5">
-      <h2 class="display-5 fw-bold">Welcome! <span id="name-goes-here"></span></h2>
-      <p class="col-md-8 fs-4">Let's add your tasks!</p>
+  <div class="p-5 mb-4 bg-light rounded-3" id="greeting-container">
+    <div class="container-fluid py-5" id="greeting-container-2">
+      <h2 class="display-5 fw-bold" id="greeting-heading">Welcome! <span id="name-goes-here"></span></h2>
+      <p class="col-md-8 fs-4" id="greeting-message">Let's add your tasks!</p>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AssignmentModal">
         Add assignment
       </button>
@@ -163,6 +163,97 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal for editing assignments -->
+  <div class="modal fade" id="edit_AssignmentModal" tabindex="-1" role="dialog"
+    aria-labelledby="edit_AssignmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="edit_AssignmentModalLabel">Edit the Assignment</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <fieldset class="mb-3" id="edit_personalInfoFields">
+              <div class="form-group">
+                <label>Name</label>
+                <div class="input-group has-validation">
+                  <input type="text" id="edit_assignment_name_here" class="form-control" placeholder="" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Class</label>
+                <input type="text" id="edit_class_here" class="form-control" placeholder="" />
+              </div>
+              <div class="form-group">
+                <!-- Calendar -->
+                <label>Due date</label>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="input-group date" id="edit_datetimepicker1" data-target-input="nearest">
+                          <input type="text" class="form-control datetimepicker-input"
+                            data-target="#edit_datetimepicker1" id="edit_due_date_here" placeholder="" />
+                          <div class="input-group-append" data-target="#edit_datetimepicker1"
+                            data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i>📅</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <script type="text/javascript">
+                      $(function () {
+                        $('#edit_datetimepicker1').datetimepicker();
+                      });
+                    </script>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Label Color</label>
+                <div class="color-buttons-container">
+                  <button type="button" class="btn btn-primary" id="edit_primary"
+                    onclick="change_picked_color('primary');"></button>
+                  <button type="button" class="btn btn-secondary" id="edit_secondary"
+                    onclick="change_picked_color('secondary');"></button>
+                  <button type="button" class="btn btn-success" id="edit_success"
+                    onclick="change_picked_color('success');"></button>
+                  <button type="button" class="btn btn-danger" id="edit_danger"
+                    onclick="change_picked_color('danger');"></button>
+                  <button type="button" class="btn btn-warning" id="edit_warning"
+                    onclick="change_picked_color('warning');"></button>
+                  <button type="button" class="btn btn-info" id="edit_info"
+                    onclick="change_picked_color('info');"></button>
+                  <button type="button" class="btn btn-dark" id="edit_dark"
+                    onclick="change_picked_color('dark');"></button>
+                  <button type="button" class="btn btn-violet" id="edit_violet"
+                    onclick="change_picked_color('violet');"></button>
+                  <button type="button" class="btn btn-turquoise" id="edit_turquoise"
+                    onclick="change_picked_color('turquoise');"></button>
+                  <button type="button" class="btn btn-dodgerblue" id="edit_dodgerblue"
+                    onclick="change_picked_color('dodgerblue');"></button>
+                  <button type="button" class="btn btn-greenery" id="edit_greenery"
+                    onclick="change_picked_color('greenery');"></button>
+                  <button type="button" class="btn btn-quarts" id="edit_quarts"
+                    onclick="change_picked_color('quarts');"></button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" id="edit_modal-save-button">Save changes</button>
+          <button type="submit" class="btn btn-danger" id="edit_modal-delete-button">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div class="card-container">
 
