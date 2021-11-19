@@ -15,7 +15,7 @@
 
     <title>DTC09 Symmetry Settings</title>
 
-    <!-- Firebase 8 CDNs-->
+    <!-- Firebase 8 CDNs style="background-image: url(https://firebasestorage.googleapis.com/v0/b/comp1800-dtc-09.appspot.com/o/vader.jpg?alt=media&token=cc9e4f36-16d9-4796-a32a-6719e4f0b0b5)"-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -25,7 +25,7 @@
     <script src="scripts/firebaseAPI.js"></script>
   </head>
 
-  <body>
+  <body style="background-size: cover;">
     <nav class="navbar navbar-light" style="background-color: #e3f2fd">
       <div class="container-fluid">
         <div>
@@ -99,10 +99,16 @@
             Choose default colours for assigments
           </div>
         </div>
-        <form>
-          <input type="file" id="fileButton"/><br /><br />
-          <button id="uploader">Upload</button>
-        </form>
+        <div class="card">
+          <div class ="card-body">
+            <form>
+              <input type="file" id="fileButton"/><br /><br />
+              <button id="uploader" class="btn btn-primary btn-md">Upload</button>
+            </form>
+            <br />
+            Choose a custom background image
+          </div>
+      </div>
   <script>
         var currentUser;
 
@@ -147,13 +153,33 @@
             fileButton.addEventListener('change', function(e){
               var userName = userDoc.data().name;
               var file = e.target.files[0];
-              var storageRef = storage.ref(userName + "/" + file.name);
-              var task = storageRef.put(file);
+              var storageRef = storage.ref(file.name);
+              storageRef.put(file);
+              console.log(file.name)
+              currentUser.update({
+                  background: file.name
+              })
             });           
           });
         }
     })
-
+    var user_img;
+    function populateImage() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          currentUser = db.collection("users").doc(user.uid)
+          currentUser.get().then(userDoc => {
+            var back_img_name = userDoc.data().background;
+            var back_img_url = storage.ref(back_img_name);
+            user_img = storage.ref().child(back_img_name)
+            user_img.getDownloadURL().then(function(result) {
+              document.body.style.backgroundImage = 'url('+result+')'
+            })
+          })  
+        }  
+      });
+    }
+populateImage();
  //       let dark = false;
  //       var button = document.querySelector("button")
  //       button.addEventListener("dark-mode", function darkmode(dark){
