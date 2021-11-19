@@ -14,7 +14,7 @@ function insertNameAndAssignments() {
     // Check if user is signed in:
     if (user) {
       // Do something for the current logged-in user here:
-      console.log(user.uid);
+      //console.log(user.uid);
       //go to the correct user document by referencing to the user uid
       currentUser = db.collection("users").doc(user.uid);
       //get the document for current user.
@@ -173,7 +173,7 @@ function editModalContentAndFoundAss(assCs, assNm, assDd, assLc) {
 
   //Search and get a index of current assignmnet in the assList in Firebase
   currentAss = { class: assCs, name: assNm, dueDate: assDd, labelColor: assLc };
-  console.log(currentAss);
+  //console.log(currentAss);
   //console.log(typeof(currentAss));
   let userID = getCurrentUserUid();
   currentAssignment = db
@@ -188,7 +188,7 @@ function editModalContentAndFoundAss(assCs, assNm, assDd, assLc) {
         tempAssignmentString = `{"class":"${assMap[i].class}","name":"${assMap[i].name}","dueDate":"${assMap[i].dueDate}","labelColor":"${assMap[i].labelColor}"}`;
         //console.log(tempAssignmentString);
         if (currentAssignmentString == tempAssignmentString) {
-          console.log("Found!!");
+          //console.log("Found!!");
           clickedAssignmentKey = i;
           clickedAssignmentString = tempAssignmentString;
         }
