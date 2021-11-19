@@ -20,6 +20,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <script src="scripts/firebaseAPI.js"></script>
   </head>
@@ -76,7 +77,13 @@
         </div>
         <div class="card">
           <div class="card-body">
-            <button type="button" class="btn btn-primary btn-md" onclick="darkmode()">Enable</button>
+            <button
+              type="button"
+              class="btn btn-primary btn-md"
+              id = "dark-mode"
+            >
+              Enable
+            </button>
             <br />
             <br />
             Click to enable dark theme
@@ -92,85 +99,81 @@
             Choose default colours for assigments
           </div>
         </div>
-        <div class="card">
-          <div class="card-body">
-            <label class="form-label" for="customFile">Choose custom background image</label>
-            <input type="file" class="form-control" id="customFile" />
-            <button type="submit">Upload image</button>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-
-          <label class="form-label" for="customFile">Default file input example</label>
-          <input type="file" class="form-control" id="customFile" />
-          <p>Choose images</p>
-        </div>
-      </div>
-    </div>
-  </body>
-
+        <form>
+          <input type="file" id="fileButton"/><br /><br />
+          <button id="uploader">Upload</button>
+        </form>
   <script>
-    var currentUser;
+        var currentUser;
 
-    function populateInfo() {
-      firebase.auth().onAuthStateChanged(user => {
-        // Check if user is signed in:
-        if (user) {
+        function populateInfo() {
+          firebase.auth().onAuthStateChanged(user => {
+            // Check if user is signed in:
+            if (user) {
 
-          //go to the correct user document by referencing to the user uid
-          currentUser = db.collection("users").doc(user.uid)
-          //get the document for current user.
-          currentUser.get()
-            .then(userDoc => {
-              //get the data fields of the user
-              var userName = userDoc.data().name;
-              var userbirthplace = userDoc.data().birthplace;
-              var userCity = userDoc.data().city;
-              if (userName != null) {
-                document.getElementById("name").innerHTML = userName;
-              }
-              if (userbirthplace != null) {
-                document.getElementById("birthplace").innerHTML = userbirthplace;
-              }
-              if (userCity != null) {
-                document.getElementById("city").innerHTML = userCity;
-              }
-            })
-        } else {
-          // No user is signed in.
-          console.log("No user is signed in");
+              //go to the correct user document by referencing to the user uid
+              currentUser = db.collection("users").doc(user.uid)
+              //get the document for current user.
+              currentUser.get()
+                .then(userDoc => {
+                  //get the data fields of the user
+                  var userName = userDoc.data().name;
+                  var userbirthplace = userDoc.data().birthplace;
+                  var userCity = userDoc.data().city;
+                  if (userName != null) {
+                    document.getElementById("name").innerHTML = userName;
+                  }
+                  if (userbirthplace != null) {
+                    document.getElementById("birthplace").innerHTML = userbirthplace;
+                  }
+                  if (userCity != null) {
+                    document.getElementById("city").innerHTML = userCity;
+                  }
+                })
+            } else {
+              // No user is signed in.
+              console.log("No user is signed in");
+            }
+          });
         }
-      });
-    }
-    populateInfo();
+        populateInfo();
 
-    var form = document.querySelector("form");
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
-      var timestamp = Number(new Date());
-      var storageRef = firebase.storage().ref(timestamp.toString());
-      var $ = jQuery;
-      var file_data = $("#customFile").prop("files")[0];
-      storageRef.put(file_data)
+      var uploader = document.getElementById('uploader');
+      var fileButton = document.getElementById('fileButton');
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          currentUser = db.collection("users").doc(user.uid)
+          currentUser.get().then(userDoc => { 
+            fileButton.addEventListener('change', function(e){
+              var userName = userDoc.data().name;
+              var file = e.target.files[0];
+              var storageRef = storage.ref(userName + "/" + file.name);
+              var task = storageRef.put(file);
+            });           
+          });
+        }
     })
 
-
-    let dark = false;
-    function darkmode(dark){
-      if (dark == false){
-        currentUser.update({
-            dark: true
-          })
-          dark = true;
-        }else{
-          currentUser.update({
-            dark: false
-          })
-          dark = false;
-      }
-    }
+ //       let dark = false;
+ //       var button = document.querySelector("button")
+ //       button.addEventListener("dark-mode", function darkmode(dark){
+ //          firebase.auth().onAuthStateChanged(user => {
+ //          currentUser = db.collection("users").doc(user.uid)
+ //      if (user) {
+ //             if (dark == false){
+ //               currentUser.update({
+ //                   dark: true
+ //                })
+ //                dark = true;
+ //              }else{
+ //                currentUser.update({
+ //                  dark: false
+ //                 })
+ //                dark = false;
+ //             }
+ //          }
+ //        });
+ //        })
 
   </script>
 </html>
