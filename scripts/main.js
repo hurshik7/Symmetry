@@ -109,7 +109,7 @@
       userAssignment.get().then(function(doc) {
         if (doc.exists) {
             userAssignment.update({
-                "assList": firebase.firestore.FieldValue.arrayRemove(doc.data().assList[0])
+                "assList": firebase.firestore.FieldValue.arrayRemove(doc.data().assList[currentAssignment])
             });
         }
     })
