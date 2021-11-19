@@ -21,6 +21,8 @@
 
   <script src="/scripts/firebaseAPI.js"></script>
 
+  <link rel="stylesheet" type="text/css" href="./styles/profile.css">
+
 </head>
 
 <body>
@@ -65,8 +67,9 @@
     </div>
   </nav>
 
-  <div class="container">
-    <h1>User Profile </h1>
+  <div class="profile_container">
+    <img id="profile_pic" src="images/profile_pic.png" alt="Profile Pic">
+    <h1 id="profile_title">User Profile </h1>
     <form>
       <fieldset class="mb-3" id="personalInfoFields" disabled>
         <div class="form-group">
@@ -82,7 +85,7 @@
           <input type="text" id="cityInput" class="form-control" placeholder="Enter your city">
         </div>
       </fieldset>
-      <div class="d-flex justify-content-end mt-5">
+      <div id="profile_function_btns" class="d-flex justify-content-center mt-2">
         <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
         <span style="width: 10px"></span>
         <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>

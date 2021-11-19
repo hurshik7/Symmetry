@@ -30,8 +30,6 @@
 
   <link rel="stylesheet" type="text/css" href="./styles/login.css">
 
-
-
 </head>
 
 <body>
@@ -90,14 +88,6 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 
-
-
-  
-<!--  -->
-
-
-<!--  -->
-
   <!-- Authentication -->
   <script>
     // Initialize the FirebaseUI Widget using Firebase.
@@ -123,8 +113,9 @@
               email: user.email,                          //with authenticated user's ID (user.uid)
             })
             db.collection("Assignments").doc(user.uid).set({
-              assList: [],
-              count: 0
+              assMap: {},
+              count: 0,
+              assMapKey: 0
             }).then(function () {
               console.log("New user and user's assignment document added to firestore");
               window.location.assign("main.html");       //re-direct to main.html after signup
@@ -165,21 +156,20 @@
     ui.start('#firebaseui-auth-container', uiConfig);
   </script>
 
-<script>
+  <script>
+    // Random Number Generator
+    var images = [],
+      index = 0;
+    images[0] = url("images/1BGPortraitImage.jpg");
+    images[1] = url("images/2BGPortraitImage.jpg");
+    images[2] = url("images/3BGPortraitImage.jpg");
+    index = Math.floor(Math.random() * images.length);
 
-  // Random Number Generator
-  var images = [],
-  index = 0;
-  images[0] = url("images/1BGPortraitImage.jpg");
-  images[1] = url("images/2BGPortraitImage.jpg");
-  images[2] = url("images/3BGPortraitImage.jpg");
-  index = Math.floor(Math.random() * images.length);
+    element.style.backgroundImage = images[index];
 
-  element.style.backgroundImage = images[index];
-
-  console.log(images[index])
+    console.log(images[index])
   </script>
-  
+
 </body>
 
 </html>

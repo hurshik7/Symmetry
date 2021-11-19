@@ -1,0 +1,13 @@
+#profile_pic {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    width: 20%;
+    border-radius: 50%;
+}
+
+#profile_title {
+    text-align: center;
+}
