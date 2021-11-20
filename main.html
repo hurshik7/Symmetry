@@ -18,6 +18,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
   <script src="/scripts/firebaseAPI.js"></script>
 
@@ -74,7 +75,7 @@
         Welcome! <span id="name-goes-here"></span>
       </h4>
       <p class="col-md-8 fs-4" id="greeting-message">Let's add your tasks!</p>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AssignmentModal">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AssignmentModal" onclick="playAssignmentCompleteSound();">
         Add assignment
       </button>
     </div>
@@ -261,6 +262,8 @@
           </form>
         </div>
         <div class="modal-footer">
+          <button type="submit" class="btn btn-greenery" id="edit_modal-done-button"
+          onclick="playAssignmentCompleteSound();">Done</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="edit-modal-close">
             Close
           </button>
@@ -290,6 +293,8 @@
 
   <!-- insertName, store information of assignment from Modal to firestore -->
   <script src="/scripts/main.js"></script>
+  <script>populateImage();</script>
+  
   <!-- Tempus Dominus Bootstrap 4 -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
