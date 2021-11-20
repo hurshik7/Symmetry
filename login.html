@@ -158,16 +158,12 @@
 
   <script>
     // Random Number Generator
-    var images = [],
-      index = 0;
-    images[0] = url("images/1BGPortraitImage.jpg");
-    images[1] = url("images/2BGPortraitImage.jpg");
-    images[2] = url("images/3BGPortraitImage.jpg");
+    var images = ["url(./images/1BGPortraitImage.jpg)", "url(./images/2BGPortraitImage.jpg)", "url(./images/3BGPortraitImage.jpg)"];
     index = Math.floor(Math.random() * images.length);
+    //console.log(index);
 
-    element.style.backgroundImage = images[index];
-
-    console.log(images[index])
+    //console.log(images[index]);
+    //$('body').attr('background-image', images[index]);
   </script>
 
 </body>
