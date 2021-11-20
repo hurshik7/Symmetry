@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+  <title>DTC09 Symmetry</title>
+
+  <!-- Firebase 8 CDNs -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+
+  <script src="/scripts/firebaseAPI.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="./styles/main.css" />
+</head>
+
+<body>
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a href="#"><img src="images/logo.png" width="100" height="auto" alt="symmetry_logo" /></a>
+      <button id="plus-button" type="button" class="btn btn-outline-primary" data-toggle="modal"
+        data-target="#AssignmentModal">
+        &#10133;
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="settings.html">Settings ⚙️</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="main.html">Assignments ➕</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Dark Mode 🌙</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="profile.html">Profile 👤</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="login.html">Log-in / Log-out ✏️
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="p-3 mb-2 bg-light rounded-3" id="greeting-container">
+    <div class="container-fluid py-3" id="greeting-container-2">
+      <h4 class="display-7 fw-bold" id="greeting-heading">
+            <span id="name-goes-here"></span>, This is what you've done!
+      </h4>
+    </div>
+  </div>
+
+  <!-- Check info of DONE assignment Modal -->
+  <div class="modal fade" id="AssignmentModal" tabindex="-1" role="dialog" aria-labelledby="AssignmentModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="AssignmentModalLabel">
+            Add an Assignment
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <fieldset class="mb-3" id="personalInfoFields">
+              <div class="form-group">
+                <label>Name</label>
+                <div class="input-group has-validation">
+                  <input type="text" id="AssignmentInput" class="form-control"
+                    placeholder="Enter your assigment name" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Class</label>
+                <input type="text" id="ClassInput" class="form-control" placeholder="Enter your class" />
+              </div>
+              <div class="form-group">
+                <!-- Calendar -->
+                <label>Due date</label>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                          <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"
+                            id="DuedateInput" />
+                          <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                            <div class="input-group-text">
+                              <i class="fa fa-calendar"></i>📅
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <script type="text/javascript">
+                      $(function () {
+                        $("#datetimepicker1").datetimepicker();
+                      });
+                    </script>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Label Color</label>
+                <div class="color-buttons-container">
+                  <button type="button" class="btn btn-primary" id="primary"
+                    onclick="change_picked_color('primary');"></button>
+                  <button type="button" class="btn btn-secondary" id="secondary"
+                    onclick="change_picked_color('secondary');"></button>
+                  <button type="button" class="btn btn-success" id="success"
+                    onclick="change_picked_color('success');"></button>
+                  <button type="button" class="btn btn-danger" id="danger"
+                    onclick="change_picked_color('danger');"></button>
+                  <button type="button" class="btn btn-warning" id="warning"
+                    onclick="change_picked_color('warning');"></button>
+                  <button type="button" class="btn btn-info" id="info" onclick="change_picked_color('info');"></button>
+                  <button type="button" class="btn btn-dark" id="dark" onclick="change_picked_color('dark');"></button>
+                  <button type="button" class="btn btn-violet" id="violet"
+                    onclick="change_picked_color('violet');"></button>
+                  <button type="button" class="btn btn-turquoise" id="turquoise"
+                    onclick="change_picked_color('turquoise');"></button>
+                  <button type="button" class="btn btn-dodgerblue" id="dodgerblue"
+                    onclick="change_picked_color('dodgerblue');"></button>
+                  <button type="button" class="btn btn-greenery" id="greenery"
+                    onclick="change_picked_color('greenery');"></button>
+                  <button type="button" class="btn btn-quarts" id="quarts"
+                    onclick="change_picked_color('quarts');"></button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary" id="modal-save-button">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card-container"></div>
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+    integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+    integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+
+  <!-- Tempus Dominus Bootstrap 4 -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"
+    integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA=="
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css"
+    integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg=="
+    crossorigin="anonymous" />
+
+    <script src="/scripts/done.js"></script>
+
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>
