@@ -287,7 +287,7 @@ editModalSaveBtn.addEventListener("click", saveEditedInfoToFirestore);
 //   });
 
 function playAssignmentCompleteSound() {
-  var audio = new Audio("sounds/Complete_assignment1.wav");
+  var audio = new Audio("sounds/Complete_assignment2.mp3");
   audio.play();
 }
 
