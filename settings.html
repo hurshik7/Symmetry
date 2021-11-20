@@ -1,51 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>DTC09 Symmetry Settings</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
 
-    <!-- Firebase 8 CDNs style="background-image: url(https://firebasestorage.googleapis.com/v0/b/comp1800-dtc-09.appspot.com/o/vader.jpg?alt=media&token=cc9e4f36-16d9-4796-a32a-6719e4f0b0b5)"-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <title>DTC09 Symmetry Settings</title>
 
+<<<<<<< HEAD
     <script src="scripts/firebaseAPI.js"></script>
     <script src="scripts/main.js"></script>
   </head>
+=======
+  <!-- Firebase 8 CDNs style="background-image: url(https://firebasestorage.googleapis.com/v0/b/comp1800-dtc-09.appspot.com/o/vader.jpg?alt=media&token=cc9e4f36-16d9-4796-a32a-6719e4f0b0b5)"-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+>>>>>>> 880816a78196c65c27661d663a957a3bfca0c4eb
 
-  <body style="background-size: cover;">
-    <nav class="navbar navbar-light" style="background-color: #e3f2fd">
-      <div class="container-fluid">
-        <div>
-          <a href="main.html"
-            ><button type="button" class="btn btn-primary btn-md">
-              Back
-            </button></a
-          >
-        </div>
-        <a href="main.html" class="mx-auto"
-          ><img
-            src="images/logo.png"
-            width="100"
-            height="auto"
-            alt="symmetry_logo"
-        /></a>
-        <div>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
+  <script src="scripts/firebaseAPI.js"></script>
+</head>
+
+<body style="background-size: cover;">
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd">
+    <div class="container-fluid">
+      <div>
+        <a href="main.html"><button type="button" class="btn btn-primary btn-md">
+            Back
+          </button></a>
+      </div>
+      <a href="main.html" class="mx-auto"><img src="images/logo.png" width="100" height="auto"
+          alt="symmetry_logo" /></a>
+      <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+  </nav>
+  <br /><br />
+  <h2 class="text-center">Settings</h2>
+  <br /><br />
+  <div class="container justify-content-center">
+    <div class="card">
+      <div class="card-body">
+        <button type="button" class="btn btn-primary btn-md">Login</button>
+        <br />
+        <br />
+        Login/Signup
       </div>
     </nav>
     <br /><br />
@@ -54,98 +61,53 @@
     <div class="container justify-content-center">
       <div class="card">
         <div class="card-body">
-          <button type="button" class="btn btn-primary btn-md">Login</button>
+          <a href="profile.html"><button type="button" class="btn btn-primary btn-md">
+              Profile
+            </button></a>
           <br />
           <br />
-          Login/Signup
+          <span>Name: </span>
+          <p id="name">Not set</p>
+          <span>Birthplace: </span>
+          <p id="birthplace">Not set</p>
+          <span>City: </span>
+          <p id="city">Not set</p>
         </div>
-        <div class="card">
-          <div class="card-body">
-            <a href="profile.html"
-              ><button type="button" class="btn btn-primary btn-md">
-                Profile
-              </button></a
-            >
-            <br />
-            <br />
-            <span>Name: </span>
-            <p id="name">Not set</p>
-            <span>Birthplace: </span>
-            <p id="birthplace">Not set</p>
-            <span>City: </span>
-            <p id="city">Not set</p>
-          </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <button type="button" class="btn btn-primary btn-md" id="dark-mode">
+            Enable
+          </button>
+          <br />
+          <br />
+          Click to enable dark theme
         </div>
-        <div class="card">
-          <div class="card-body">
-            <button
-              type="button"
-              class="btn btn-primary btn-md"
-              id = "dark-mode"
-            >
-              Enable
-            </button>
-            <br />
-            <br />
-            Click to enable dark theme
-          </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <button type="button" class="btn btn-primary btn-md">
+            Colours
+          </button>
+          <br />
+          <br />
+          Choose default colours for assigments
         </div>
-        <div class="card">
-          <div class="card-body">
-            <button type="button" class="btn btn-primary btn-md">
-              Colours
-            </button>
-            <br />
-            <br />
-            Choose default colours for assigments
-          </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <form>
+            <input type="file" id="fileButton" /><br /><br />
+            <button id="uploader" class="btn btn-primary btn-md">Upload</button>
+          </form>
+          <br />
+          Choose a custom background imag
         </div>
-        <div class="card">
-          <div class ="card-body">
-            <form>
-              <input type="file" id="fileButton"/><br /><br />
-              <button id="uploader" class="btn btn-primary btn-md">Upload</button>
-            </form>
-            <br />
-            Choose a custom background imag
-          </div>
       </div>
     </div>
   <script>
-        var currentUser;
-
-        function populateInfo() {
-          firebase.auth().onAuthStateChanged(user => {
-            // Check if user is signed in:
-            if (user) {
-
-              //go to the correct user document by referencing to the user uid
-              currentUser = db.collection("users").doc(user.uid)
-              //get the document for current user.
-              currentUser.get()
-                .then(userDoc => {
-                  //get the data fields of the user
-                  var userName = userDoc.data().name;
-                  var userbirthplace = userDoc.data().birthplace;
-                  var userCity = userDoc.data().city;
-                  if (userName != null) {
-                    document.getElementById("name").innerHTML = userName;
-                  }
-                  if (userbirthplace != null) {
-                    document.getElementById("birthplace").innerHTML = userbirthplace;
-                  }
-                  if (userCity != null) {
-                    document.getElementById("city").innerHTML = userCity;
-                  }
-                })
-            } else {
-              // No user is signed in.
-              console.log("No user is signed in");
-            }
-          });
-        }
-        populateInfo();
-populateImage();
+    var currentUser;  
+    populateImage();
  //       let dark = false;
  //       var button = document.querySelector("button")
  //       button.addEventListener("dark-mode", function darkmode(dark){
@@ -168,4 +130,5 @@ populateImage();
  //        })
 
   </script>
+</body>
 </html>
