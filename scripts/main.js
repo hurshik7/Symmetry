@@ -291,7 +291,7 @@ function playAssignmentCompleteSound() {
   audio.play();
 }
 
-  
+ 
 var uploader = document.getElementById('uploader');
 var fileButton = document.getElementById('fileButton');
 firebase.auth().onAuthStateChanged(user => {
@@ -324,6 +324,8 @@ firebase.auth().onAuthStateChanged(user => {
         document.body.style.backgroundImage = 'url('+result+')'
       })
     })  
-  }  
+  }
 });
 }
+
+populateImage();
