@@ -286,8 +286,8 @@ editModalSaveBtn.addEventListener("click", saveEditedInfoToFirestore);
 //     }
 //   });
 
-function play() {
-  var audio = new Audio('https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3');
+function playAssignmentCompleteSound() {
+  var audio = new Audio("sounds/Complete_assignment1.wav");
   audio.play();
 }
 
