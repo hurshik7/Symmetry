@@ -23,6 +23,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <script src="scripts/firebaseAPI.js"></script>
+    <script src="scripts/main.js"></script>
   </head>
 
   <body style="background-size: cover;">
@@ -48,7 +49,7 @@
       </div>
     </nav>
     <br /><br />
-    <h2 class="text-center">Settings</h2>
+    <h2 class="text-center" style="background-color: white;">Settings</h2>
     <br /><br />
     <div class="container justify-content-center">
       <div class="card">
@@ -109,6 +110,7 @@
             Choose a custom background imag
           </div>
       </div>
+    </div>
   <script>
         var currentUser;
 
@@ -143,42 +145,6 @@
           });
         }
         populateInfo();
-
-      var uploader = document.getElementById('uploader');
-      var fileButton = document.getElementById('fileButton');
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          currentUser = db.collection("users").doc(user.uid)
-          currentUser.get().then(userDoc => { 
-            fileButton.addEventListener('change', function(e){
-              var userName = userDoc.data().name;
-              var file = e.target.files[0];
-              var storageRef = storage.ref(file.name);
-              storageRef.put(file);
-              console.log(file.name)
-              currentUser.update({
-                  background: file.name
-              })
-            });           
-          });
-        }
-    })
-    var user_img;
-    function populateImage() {
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          currentUser = db.collection("users").doc(user.uid)
-          currentUser.get().then(userDoc => {
-            var back_img_name = userDoc.data().background;
-            var back_img_url = storage.ref(back_img_name);
-            user_img = storage.ref().child(back_img_name)
-            user_img.getDownloadURL().then(function(result) {
-              document.body.style.backgroundImage = 'url('+result+')'
-            })
-          })  
-        }  
-      });
-    }
 populateImage();
  //       let dark = false;
  //       var button = document.querySelector("button")
