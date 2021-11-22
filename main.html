@@ -46,9 +46,6 @@
             <a class="nav-link active" aria-current="page" href="done.html">DONE 📁</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Add module ➕</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Dark Mode 🌙</a>
           </li>
           <li class="nav-item">
@@ -75,7 +72,8 @@
         Welcome! <span id="name-goes-here"></span>
       </h4>
       <p class="col-md-8 fs-4" id="greeting-message">Let's add your tasks!</p>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AssignmentModal" onclick="playAssignmentCompleteSound();">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AssignmentModal"
+        onclick="playAssignmentCompleteSound();">
         Add assignment
       </button>
     </div>
@@ -90,23 +88,21 @@
           <h5 class="modal-title" id="AssignmentModalLabel">
             Add an Assignment
           </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body">
-          <form>
+          <form class="needs-validation" novalidate>
             <fieldset class="mb-3" id="personalInfoFields">
               <div class="form-group">
                 <label>Name</label>
-                <div class="input-group has-validation">
-                  <input type="text" id="AssignmentInput" class="form-control"
-                    placeholder="Enter your assigment name" />
-                </div>
+                <input type="text" id="AssignmentInput" class="form-control" placeholder="Enter your assigment name"
+                  required />
+                  <div class="invalid-feedback">Please enter your assignment name</div>
               </div>
               <div class="form-group">
-                <label>Class</label>
-                <input type="text" id="ClassInput" class="form-control" placeholder="Enter your class" />
+                <label for="validationCustom02">Class</label>
+                <input type="text" id="ClassInput" class="form-control" placeholder="Enter your class" required/>
               </div>
               <div class="form-group">
                 <!-- Calendar -->
@@ -185,8 +181,7 @@
           <h5 class="modal-title" id="edit_AssignmentModalLabel">
             Edit the Assignment
           </h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body">
@@ -263,13 +258,13 @@
         </div>
         <div class="modal-footer d-flex justify-content-center">
           <button type="submit" class="btn btn-greenery" id="edit_modal-done-button"
-          onclick="playAssignmentCompleteSound();">Done</button>
+            onclick="playAssignmentCompleteSound();">Done</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="edit-modal-close">
             Close
           </button>
           <button type="submit" class="btn btn-primary" id="edit-modal-save-button">Save</button>
           <button type="submit" class="btn btn-danger" id="edit_modal-delete-button"
-          onclick="deleteAssignment();">Delete</button>
+            onclick="deleteAssignment();">Delete</button>
         </div>
       </div>
     </div>
@@ -293,7 +288,7 @@
 
   <!-- insertName, store information of assignment from Modal to firestore -->
   <script src="/scripts/main.js"></script>
-  
+
   <!-- Tempus Dominus Bootstrap 4 -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
