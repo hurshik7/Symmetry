@@ -286,12 +286,14 @@ editModalSaveBtn.addEventListener("click", saveEditedInfoToFirestore);
 //     }
 //   });
 
+//sound control
 function playAssignmentCompleteSound() {
   var audio = new Audio("sounds/Complete_assignment2.mp3");
   audio.play();
 }
 
  
+//background image control
 var uploader = document.getElementById('uploader');
 var fileButton = document.getElementById('fileButton');
 firebase.auth().onAuthStateChanged(user => {
