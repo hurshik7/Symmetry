@@ -26,9 +26,9 @@
     <script src="scripts/main.js"></script>
   </head>
 
-  <body style="background-size: cover;">
+  <body style="background-size: cover">
     <nav class="navbar navbar-light" style="background-color: #e3f2fd">
-      <div class="container-fluid">
+      <div class="container-fluid justify-content-center">
         <div>
           <a href="main.html"
             ><button type="button" class="btn btn-primary btn-md">
@@ -49,18 +49,22 @@
       </div>
     </nav>
     <br /><br />
-    <h2 class="text-center" style="background-color: white;">Settings</h2>
+    <div class="d-flex justify-content-center bg-transparent">
+      <div class="w-50 d-flex p-2 bg-light justify-content-center rounded-2">
+        <h2 class="text-center">Settings</h2>
+      </div>
+    </div>
     <br /><br />
-    <div class="container justify-content-center">
-      <div class="card">
-        <div class="card-body">
+    <div class="container align-content-center">
+      <div class="card align-content-center">
+        <div class="card-body align-content-center">
           <button type="button" class="btn btn-primary btn-md">Login</button>
           <br />
           <br />
           Login/Signup
         </div>
         <div class="card">
-          <div class="card-body">
+          <div class="card-body justify-content-center">
             <a href="profile.html"
               ><button type="button" class="btn btn-primary btn-md">
                 Profile
@@ -68,106 +72,24 @@
             >
             <br />
             <br />
-            <span>Name: </span>
-            <p id="name">Not set</p>
-            <span>Birthplace: </span>
-            <p id="birthplace">Not set</p>
-            <span>City: </span>
-            <p id="city">Not set</p>
           </div>
         </div>
-        <div class="card">
-          <div class="card-body">
-            <button
-              type="button"
-              class="btn btn-primary btn-md"
-              id = "dark-mode"
-            >
-              Enable
-            </button>
-            <br />
-            <br />
-            Click to enable dark theme
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <button type="button" class="btn btn-primary btn-md">
-              Colours
-            </button>
-            <br />
-            <br />
-            Choose default colours for assigments
-          </div>
-        </div>
-        <div class="card">
-          <div class ="card-body">
+        <div class="card justify-content-center">
+          <div class="card-body justify-content-center">
             <form>
-              <input type="file" id="fileButton"/><br /><br />
-              <button id="uploader" class="btn btn-primary btn-md">Upload</button>
+              <input type="file" id="fileButton" /><br /><br />
+              <button id="uploader" class="btn btn-primary btn-md">
+                Upload
+              </button>
             </form>
-            <br/>
+            <br />
             Choose a custom background image
           </div>
+        </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
   <script>
-        var currentUser;
-
-        function populateInfo() {
-          firebase.auth().onAuthStateChanged(user => {
-            // Check if user is signed in:
-            if (user) {
-
-              //go to the correct user document by referencing to the user uid
-              currentUser = db.collection("users").doc(user.uid)
-              //get the document for current user.
-              currentUser.get()
-                .then(userDoc => {
-                  //get the data fields of the user
-                  var userName = userDoc.data().name;
-                  var userbirthplace = userDoc.data().birthplace;
-                  var userCity = userDoc.data().city;
-                  if (userName != null) {
-                    document.getElementById("name").innerHTML = userName;
-                  }
-                  if (userbirthplace != null) {
-                    document.getElementById("birthplace").innerHTML = userbirthplace;
-                  }
-                  if (userCity != null) {
-                    document.getElementById("city").innerHTML = userCity;
-                  }
-                })
-            } else {
-              // No user is signed in.
-              console.log("No user is signed in");
-            }
-          });
-        }
-        populateInfo();
-populateImage();
- //       let dark = false;
- //       var button = document.querySelector("button")
- //       button.addEventListener("dark-mode", function darkmode(dark){
- //          firebase.auth().onAuthStateChanged(user => {
- //          currentUser = db.collection("users").doc(user.uid)
- //      if (user) {
- //             if (dark == false){
- //               currentUser.update({
- //                   dark: true
- //                })
- //                dark = true;
- //              }else{
- //                currentUser.update({
- //                  dark: false
- //                 })
- //                dark = false;
- //             }
- //          }
- //        });
- //        })
-
+    populateImage();
   </script>
 </html>
