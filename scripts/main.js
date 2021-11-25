@@ -53,7 +53,7 @@ function insertNameAndAssignments() {
               let assDueDate = assMap[i].dueDate;
               let assLabelColor = assMap[i].labelColor;
               //console.log(assName, assClass, assDueDate, assLabelColor);
-  
+
               var cardTemplate = `
                     <a id="${
                       assClass + assName
@@ -131,7 +131,7 @@ function saveModalInfoToFirestore() {
         userAssignment
           .update({
             count: firebase.firestore.FieldValue.increment(1),
-            assMapKey: firebase.firestore.FieldValue.increment(1)
+            assMapKey: firebase.firestore.FieldValue.increment(1),
           })
           .then(function () {
             console.log("assignment count +1 (Map)");
@@ -167,7 +167,6 @@ function editModalContentAndFoundAss(assCs, assNm, assDd, assLc) {
   //console.log(buttonClass);
   $(currentColorID).text("current");
 
-
   //Found the assignment in the firesotre.
   clikedColor = assLc;
 
@@ -202,7 +201,32 @@ function editModalContentAndFoundAss(assCs, assNm, assDd, assLc) {
     });
 }
 
-function saveEditedInfoToFirestore() {
+// make Done collection for users who don't have it
+async function makeDoneCollection() {
+  var userID = getCurrentUserUid();
+  let userCollectionDoc = db
+    .collection("Done")
+    .doc(userID)
+    .get()
+    .then((doc) => {
+      if (!doc.exists) {
+        db.collection(collectionName)
+          .doc(userID)
+          .set({
+            assMap: {},
+            count: 0,
+          })
+          .then(function () {
+            console.log("Made done for new user");
+          })
+          .catch(function (error) {
+            console.log("Error adding done collection: " + error);
+          });
+      }
+    });
+}
+
+async function saveEditedInfoToFirestore(collectionName) {
   assignmentName = document.querySelector("#edit_assignment_name_here");
   //console.log(assignmentName.value);
   assignmentClass = document.querySelector("#edit_class_here");
@@ -214,43 +238,77 @@ function saveEditedInfoToFirestore() {
 
   let userID = getCurrentUserUid();
   var updateAss = {};
-  let keyStringTemplate = 'assMap.' + clickedAssignmentKey + '.';
-  updateAss[keyStringTemplate + 'class'] = assignmentClass.value;
-  updateAss[keyStringTemplate + 'name'] = assignmentName.value;
-  updateAss[keyStringTemplate + 'dueDate'] = assignmentDuedate.value;
-  updateAss[keyStringTemplate + 'labelColor'] = assignmentColor;
-  let updateNested = db.collection("Assignments").doc(userID).update(updateAss)
-    .then(function () {
-      console.log("edited assignment info added to firestore");
-      alert(`Your assignment has been edited!`);
-      window.location.assign("main.html");
-    })
-    .catch(function (error) {
+  let keyStringTemplate = "assMap." + clickedAssignmentKey + ".";
+  updateAss[keyStringTemplate + "class"] = assignmentClass.value;
+  updateAss[keyStringTemplate + "name"] = assignmentName.value;
+  updateAss[keyStringTemplate + "dueDate"] = assignmentDuedate.value;
+  updateAss[keyStringTemplate + "labelColor"] = assignmentColor;
+
+  let updateNested = undefined;
+  if (collectionName == "Done") {
+    //console.log(updateAss);
+    makeDoneCollection().then(function () {
+      updateNested = db.collection(collectionName).doc(userID);
+      console.log(updateAss);
+      updateNested.update(updateAss);
+      updateNested
+        .update({
+          count: firebase.firestore.FieldValue.increment(1),
+        })
+        .then(function () {
+          console.log("The assignment moved to DONE page!");
+          alert(
+            `[${assignmentClass.value}] ${assignmentName.value} moved to DONE page!`
+          );
+          window.location.assign("main.html");
+        })
+        .catch(function (error) {
+          console.log("Error moving to done: " + error);
+        });
+    });
+  } else {
+    updateNested = db
+      .collection(collectionName)
+      .doc(userID)
+      .update(updateAss)
+      .then(function () {
+        console.log("edited assignment info added to firestore");
+        alert(`Your assignment has been edited!`);
+        window.location.assign("main.html");
+      })
+      .catch(function (error) {
         console.log("Error editing assignment: " + error);
       });
+  }
 }
 
-function deleteAssignment() {
-  if (confirm("Are you sure to delete it?") == false) {
-    return;
+function deleteAssignment(collectionName, isDeleteBtn) {
+  if (isDeleteBtn) {
+    if (confirm("Are you sure to delete it?") == false) {
+      return;
+    }
   }
 
-  console.log(clickedAssignmentKey);
+  //console.log(clickedAssignmentKey);
   let userID = getCurrentUserUid();
-  var userAssignment = db.collection("Assignments").doc(userID);
+  var userAssignment = db.collection(collectionName).doc(userID);
   userAssignment.get().then(function (doc) {
     if (doc.exists) {
-      userAssignment.set({ assMap : {
-        [clickedAssignmentKey]: firebase.firestore.FieldValue.delete()
-      }
-      }, {merge: true});
+      userAssignment.set(
+        {
+          assMap: {
+            [clickedAssignmentKey]: firebase.firestore.FieldValue.delete(),
+          },
+        },
+        { merge: true }
+      );
 
       userAssignment
         .update({
           count: firebase.firestore.FieldValue.increment(-1),
         })
         .then(function () {
-          //console.log("assignment count -1");
+          console.log("assignment count -1");
           //console.log("assignment data deleted from firestore");
           alert(`Your assignment has been deleted!`);
           window.location.assign("main.html");
@@ -262,7 +320,13 @@ function deleteAssignment() {
 var modalSaveBtn = document.querySelector("#modal-save-button");
 modalSaveBtn.addEventListener("click", saveModalInfoToFirestore);
 var editModalSaveBtn = document.querySelector("#edit-modal-save-button");
-editModalSaveBtn.addEventListener("click", saveEditedInfoToFirestore);
+editModalSaveBtn.addEventListener(
+  "click",
+  function () {
+    saveEditedInfoToFirestore("Assignments");
+  },
+  false
+);
 
 // I just left this code for the next sprint. - Shik
 //delete all assignments
@@ -292,42 +356,9 @@ function playAssignmentCompleteSound() {
   audio.play();
 }
 
- 
-//background image control
-var uploader = document.getElementById('uploader');
-var fileButton = document.getElementById('fileButton');
-firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    currentUser = db.collection("users").doc(user.uid)
-    currentUser.get().then(userDoc => { 
-      fileButton.addEventListener('change', function(e){
-        var userName = userDoc.data().name;
-        var file = e.target.files[0];
-        var storageRef = storage.ref(file.name);
-        storageRef.put(file);
-        console.log(file.name)
-        currentUser.update({
-            background: file.name
-        })
-      });           
-    });
-  }
-})
-var user_img;
-function populateImage() {
-firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    currentUser = db.collection("users").doc(user.uid)
-    currentUser.get().then(userDoc => {
-      var back_img_name = userDoc.data().background;
-      var back_img_url = storage.ref(back_img_name);
-      user_img = storage.ref().child(back_img_name)
-      user_img.getDownloadURL().then(function(result) {
-        document.body.style.backgroundImage = 'url('+result+')'
-      })
-    })  
-  }
-});
+//move to Done! (remove from Assignments collection and add the assignment to Done collections)
+function moveToDone() {
+  saveEditedInfoToFirestore("Done");
+  deleteAssignment("Assignments", false);
+  playAssignmentCompleteSound();
 }
-
-populateImage();

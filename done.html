@@ -21,6 +21,7 @@
 
   <script src="/scripts/firebaseAPI.js"></script>
 
+  <link rel="stylesheet" type="text/css" href="./styles/done.css" />
   <link rel="stylesheet" type="text/css" href="./styles/main.css" />
 </head>
 
@@ -67,32 +68,30 @@
     </div>
   </div>
 
-  <!-- Check info of DONE assignment Modal -->
-  <div class="modal fade" id="AssignmentModal" tabindex="-1" role="dialog" aria-labelledby="AssignmentModalLabel"
-    aria-hidden="true">
+  <!-- Modal for editing assignments -->
+  <div class="modal fade" id="edit_AssignmentModal" tabindex="-1" role="dialog"
+    aria-labelledby="edit_AssignmentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="AssignmentModalLabel">
-            Add an Assignment
+          <h5 class="modal-title" id="edit_AssignmentModalLabel">
+            Edit the Assignment
           </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body">
           <form>
-            <fieldset class="mb-3" id="personalInfoFields">
+            <fieldset class="mb-3" id="edit_personalInfoFields">
               <div class="form-group">
                 <label>Name</label>
                 <div class="input-group has-validation">
-                  <input type="text" id="AssignmentInput" class="form-control"
-                    placeholder="Enter your assigment name" />
+                  <input type="text" id="edit_assignment_name_here" class="form-control" placeholder="" />
                 </div>
               </div>
               <div class="form-group">
                 <label>Class</label>
-                <input type="text" id="ClassInput" class="form-control" placeholder="Enter your class" />
+                <input type="text" id="edit_class_here" class="form-control" placeholder="" />
               </div>
               <div class="form-group">
                 <!-- Calendar -->
@@ -101,10 +100,11 @@
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="form-group">
-                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                          <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"
-                            id="DuedateInput" />
-                          <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <div class="input-group date" id="edit_datetimepicker1" data-target-input="nearest">
+                          <input type="text" class="form-control datetimepicker-input"
+                            data-target="#edit_datetimepicker1" id="edit_due_date_here" placeholder="" />
+                          <div class="input-group-append" data-target="#edit_datetimepicker1"
+                            data-toggle="datetimepicker">
                             <div class="input-group-text">
                               <i class="fa fa-calendar"></i>📅
                             </div>
@@ -114,7 +114,7 @@
                     </div>
                     <script type="text/javascript">
                       $(function () {
-                        $("#datetimepicker1").datetimepicker();
+                        $("#edit_datetimepicker1").datetimepicker();
                       });
                     </script>
                   </div>
@@ -123,45 +123,48 @@
               <div class="form-group">
                 <label>Label Color</label>
                 <div class="color-buttons-container">
-                  <button type="button" class="btn btn-primary" id="primary"
+                  <button type="button" class="btn btn-primary" id="edit_primary"
                     onclick="change_picked_color('primary');"></button>
-                  <button type="button" class="btn btn-secondary" id="secondary"
+                  <button type="button" class="btn btn-secondary" id="edit_secondary"
                     onclick="change_picked_color('secondary');"></button>
-                  <button type="button" class="btn btn-success" id="success"
+                  <button type="button" class="btn btn-success" id="edit_success"
                     onclick="change_picked_color('success');"></button>
-                  <button type="button" class="btn btn-danger" id="danger"
+                  <button type="button" class="btn btn-danger" id="edit_danger"
                     onclick="change_picked_color('danger');"></button>
-                  <button type="button" class="btn btn-warning" id="warning"
+                  <button type="button" class="btn btn-warning" id="edit_warning"
                     onclick="change_picked_color('warning');"></button>
-                  <button type="button" class="btn btn-info" id="info" onclick="change_picked_color('info');"></button>
-                  <button type="button" class="btn btn-dark" id="dark" onclick="change_picked_color('dark');"></button>
-                  <button type="button" class="btn btn-violet" id="violet"
+                  <button type="button" class="btn btn-info" id="edit_info"
+                    onclick="change_picked_color('info');"></button>
+                  <button type="button" class="btn btn-dark" id="edit_dark"
+                    onclick="change_picked_color('dark');"></button>
+                  <button type="button" class="btn btn-violet" id="edit_violet"
                     onclick="change_picked_color('violet');"></button>
-                  <button type="button" class="btn btn-turquoise" id="turquoise"
+                  <button type="button" class="btn btn-turquoise" id="edit_turquoise"
                     onclick="change_picked_color('turquoise');"></button>
-                  <button type="button" class="btn btn-dodgerblue" id="dodgerblue"
+                  <button type="button" class="btn btn-dodgerblue" id="edit_dodgerblue"
                     onclick="change_picked_color('dodgerblue');"></button>
-                  <button type="button" class="btn btn-greenery" id="greenery"
+                  <button type="button" class="btn btn-greenery" id="edit_greenery"
                     onclick="change_picked_color('greenery');"></button>
-                  <button type="button" class="btn btn-quarts" id="quarts"
+                  <button type="button" class="btn btn-quarts" id="edit_quarts"
                     onclick="change_picked_color('quarts');"></button>
                 </div>
               </div>
             </fieldset>
           </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="submit" class="btn btn-violet" id="edit-modal-putback-button"
+            onclick="moveToAssignment();">Put Back</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="edit-modal-close">
             Close
           </button>
-          <button type="submit" class="btn btn-primary" id="modal-save-button">
-            Save
-          </button>
+          <button type="submit" class="btn btn-primary" id="edit-modal-save-button">Save</button>
+          <button type="submit" class="btn btn-danger" id="edit_modal-delete-button"
+            onclick="deleteAssignment('Done', true);">Delete</button>
         </div>
       </div>
     </div>
   </div>
-
 
   <div class="card-container"></div>
 
