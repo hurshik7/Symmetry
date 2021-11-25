@@ -203,6 +203,7 @@ function editModalContentAndFoundAss(assCs, assNm, assDd, assLc) {
 
 // make Done collection for users who don't have it
 async function makeDoneCollection() {
+  console.log("makeDone");
   var userID = getCurrentUserUid();
   let userCollectionDoc = db
     .collection("Done")
@@ -210,7 +211,7 @@ async function makeDoneCollection() {
     .get()
     .then((doc) => {
       if (!doc.exists) {
-        db.collection(collectionName)
+        db.collection("Done")
           .doc(userID)
           .set({
             assMap: {},
