@@ -358,42 +358,6 @@ function playAssignmentCompleteSound() {
   audio.play();
 }
 
-  
-var uploader = document.getElementById('uploader');
-var fileButton = document.getElementById('fileButton');
-firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    currentUser = db.collection("users").doc(user.uid)
-    currentUser.get().then(userDoc => { 
-      fileButton.addEventListener('change', function(e){
-        var userName = userDoc.data().name;
-        var file = e.target.files[0];
-        var storageRef = storage.ref(file.name);
-        storageRef.put(file);
-        console.log(file.name)
-        currentUser.update({
-            background: file.name
-        })
-      });           
-    });
-  }
-})
-var user_img;
-function populateImage() {
-firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    currentUser = db.collection("users").doc(user.uid)
-    currentUser.get().then(userDoc => {
-      var back_img_name = userDoc.data().background;
-      //var back_img_url = storage.ref(back_img_name);
-      user_img = storage.ref().child(back_img_name)
-      user_img.getDownloadURL().then(function(result) {
-        document.body.style.backgroundImage = 'url('+result+')'
-      })
-    })  
-  }  
-});
-}
 //move to Done! (remove from Assignments collection and add the assignment to Done collections)
 function moveToDone() {
   saveEditedInfoToFirestore("Done")
