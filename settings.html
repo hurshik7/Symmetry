@@ -23,10 +23,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <script src="scripts/firebaseAPI.js"></script>
-    <script src="scripts/main.js"></script>
   </head>
 
-  <body style="background-size: cover;">
+  <body style="background-size: cover">
     <nav class="navbar navbar-light" style="background-color: #e3f2fd">
       <div class="container-fluid">
         <div>
@@ -49,7 +48,7 @@
       </div>
     </nav>
     <br /><br />
-    <h2 class="text-center" style="background-color: white;">Settings</h2>
+    <h2 class="text-center" style="background-color: white">Settings</h2>
     <br /><br />
     <div class="container justify-content-center">
       <div class="card">
@@ -78,11 +77,7 @@
         </div>
         <div class="card">
           <div class="card-body">
-            <button
-              type="button"
-              class="btn btn-primary btn-md"
-              id = "dark-mode"
-            >
+            <button type="button" class="btn btn-primary btn-md" id="dark-mode">
               Enable
             </button>
             <br />
@@ -101,73 +96,73 @@
           </div>
         </div>
         <div class="card">
-          <div class ="card-body">
+          <div class="card-body">
             <form>
-              <input type="file" id="fileButton"/><br /><br />
-              <button id="uploader" class="btn btn-primary btn-md">Upload</button>
+              <input type="file" id="fileButton" /><br /><br />
+              <button id="uploader" class="btn btn-primary btn-md">
+                Upload
+              </button>
             </form>
-            <br/>
+            <br />
             Choose a custom background image
           </div>
+        </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
   <script>
-        var currentUser;
+    var currentUser;
 
-        function populateInfo() {
-          firebase.auth().onAuthStateChanged(user => {
-            // Check if user is signed in:
-            if (user) {
-
-              //go to the correct user document by referencing to the user uid
-              currentUser = db.collection("users").doc(user.uid)
-              //get the document for current user.
-              currentUser.get()
-                .then(userDoc => {
-                  //get the data fields of the user
-                  var userName = userDoc.data().name;
-                  var userbirthplace = userDoc.data().birthplace;
-                  var userCity = userDoc.data().city;
-                  if (userName != null) {
-                    document.getElementById("name").innerHTML = userName;
-                  }
-                  if (userbirthplace != null) {
-                    document.getElementById("birthplace").innerHTML = userbirthplace;
-                  }
-                  if (userCity != null) {
-                    document.getElementById("city").innerHTML = userCity;
-                  }
-                })
-            } else {
-              // No user is signed in.
-              console.log("No user is signed in");
+    function populateInfo() {
+      firebase.auth().onAuthStateChanged((user) => {
+        // Check if user is signed in:
+        if (user) {
+          //go to the correct user document by referencing to the user uid
+          currentUser = db.collection("users").doc(user.uid);
+          //get the document for current user.
+          currentUser.get().then((userDoc) => {
+            //get the data fields of the user
+            var userName = userDoc.data().name;
+            var userbirthplace = userDoc.data().birthplace;
+            var userCity = userDoc.data().city;
+            if (userName != null) {
+              document.getElementById("name").innerHTML = userName;
+            }
+            if (userbirthplace != null) {
+              document.getElementById("birthplace").innerHTML = userbirthplace;
+            }
+            if (userCity != null) {
+              document.getElementById("city").innerHTML = userCity;
             }
           });
+        } else {
+          // No user is signed in.
+          console.log("No user is signed in");
         }
-        populateInfo();
-populateImage();
- //       let dark = false;
- //       var button = document.querySelector("button")
- //       button.addEventListener("dark-mode", function darkmode(dark){
- //          firebase.auth().onAuthStateChanged(user => {
- //          currentUser = db.collection("users").doc(user.uid)
- //      if (user) {
- //             if (dark == false){
- //               currentUser.update({
- //                   dark: true
- //                })
- //                dark = true;
- //              }else{
- //                currentUser.update({
- //                  dark: false
- //                 })
- //                dark = false;
- //             }
- //          }
- //        });
- //        })
+      });
+    }
+    populateInfo();
 
+    //background image store
+    var uploader = document.getElementById("uploader");
+    var fileButton = document.getElementById("fileButton");
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        currentUser = db.collection("users").doc(user.uid);
+        currentUser.get().then((userDoc) => {
+          fileButton.addEventListener("change", function (e) {
+            var userName = userDoc.data().name;
+            var file = e.target.files[0];
+            var storageRef = storage.ref(file.name);
+            storageRef.put(file);
+            console.log(file.name);
+            currentUser.update({
+              background: file.name,
+            });
+          });
+        });
+      }
+    });
   </script>
+  <script src="scripts/populateImage.js"></script>
 </html>
