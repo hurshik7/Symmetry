@@ -27,7 +27,7 @@
 
   <body style="background-size: cover">
     <nav class="navbar navbar-light" style="background-color: #e3f2fd">
-      <div class="container-fluid">
+      <div class="container-fluid justify-content-center">
         <div>
           <a href="main.html"
             ><button type="button" class="btn btn-primary btn-md">
@@ -48,18 +48,22 @@
       </div>
     </nav>
     <br /><br />
-    <h2 class="text-center" style="background-color: white">Settings</h2>
+    <div class="d-flex justify-content-center bg-transparent">
+      <div class="w-50 d-flex p-2 bg-light justify-content-center rounded-2">
+        <h2 class="text-center">Settings</h2>
+      </div>
+    </div>
     <br /><br />
-    <div class="container justify-content-center">
-      <div class="card">
-        <div class="card-body">
+    <div class="container align-content-center">
+      <div class="card align-content-center">
+        <div class="card-body align-content-center">
           <button type="button" class="btn btn-primary btn-md">Login</button>
           <br />
           <br />
           Login/Signup
         </div>
         <div class="card">
-          <div class="card-body">
+          <div class="card-body justify-content-center">
             <a href="profile.html"
               ><button type="button" class="btn btn-primary btn-md">
                 Profile
@@ -67,6 +71,10 @@
             >
             <br />
             <br />
+          </div>
+        </div>
+        <div class="card justify-content-center">
+          <div class="card-body justify-content-center">
             <span>Name: </span>
             <p id="name">Not set</p>
             <span>Birthplace: </span>
@@ -111,6 +119,7 @@
     </div>
   </body>
   <script>
+    populateImage();
     var currentUser;
 
     function populateInfo() {
