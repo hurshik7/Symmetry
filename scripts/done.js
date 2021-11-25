@@ -149,7 +149,12 @@ async function saveEditedInfoToFirestore(collectionName) {
     })
     .then(function () {
       console.log("edited assignment info added to firestore");
-      alert(`Your assignment has been put back!`);
+      if (collectionName == "Done") {
+        alert('Your assignment has been edited!');
+      }
+      else {
+        alert(`Your assignment has been put back!`);
+      }
       window.location.assign("done.html");
     })
     .catch(function (error) {

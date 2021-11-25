@@ -225,6 +225,7 @@ async function makeDoneCollection() {
           });
       }
     });
+    return true;
 }
 
 async function saveEditedInfoToFirestore(collectionName) {
@@ -359,7 +360,9 @@ function playAssignmentCompleteSound() {
 
 //move to Done! (remove from Assignments collection and add the assignment to Done collections)
 function moveToDone() {
-  saveEditedInfoToFirestore("Done");
-  deleteAssignment("Assignments", false);
-  playAssignmentCompleteSound();
+  saveEditedInfoToFirestore("Done")
+    .then( function () {
+      deleteAssignment("Assignments", false);
+      playAssignmentCompleteSound();
+    })
 }

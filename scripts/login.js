@@ -24,7 +24,12 @@ var uiConfig = {
           assMap: {},
           count: 0,
           assMapKey: 0
-        }).then(function () {
+        })
+        db.collection("Done").doc(user.uid).set({
+          assMap: {},
+          count: 0,
+        })
+        .then(function () {
           console.log("New user and user's assignment document added to firestore");
           window.location.assign("main.html");       //re-direct to main.html after signup
         })
