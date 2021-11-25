@@ -23,7 +23,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <script src="scripts/firebaseAPI.js"></script>
-    <script src="scripts/main.js"></script>
   </head>
 
   <body style="background-size: cover">
@@ -76,6 +75,36 @@
         </div>
         <div class="card justify-content-center">
           <div class="card-body justify-content-center">
+            <span>Name: </span>
+            <p id="name">Not set</p>
+            <span>Birthplace: </span>
+            <p id="birthplace">Not set</p>
+            <span>City: </span>
+            <p id="city">Not set</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <button type="button" class="btn btn-primary btn-md" id="dark-mode">
+              Enable
+            </button>
+            <br />
+            <br />
+            Click to enable dark theme
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <button type="button" class="btn btn-primary btn-md">
+              Colours
+            </button>
+            <br />
+            <br />
+            Choose default colours for assigments
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
             <form>
               <input type="file" id="fileButton" /><br /><br />
               <button id="uploader" class="btn btn-primary btn-md">
@@ -91,5 +120,58 @@
   </body>
   <script>
     populateImage();
+    var currentUser;
+
+    function populateInfo() {
+      firebase.auth().onAuthStateChanged((user) => {
+        // Check if user is signed in:
+        if (user) {
+          //go to the correct user document by referencing to the user uid
+          currentUser = db.collection("users").doc(user.uid);
+          //get the document for current user.
+          currentUser.get().then((userDoc) => {
+            //get the data fields of the user
+            var userName = userDoc.data().name;
+            var userbirthplace = userDoc.data().birthplace;
+            var userCity = userDoc.data().city;
+            if (userName != null) {
+              document.getElementById("name").innerHTML = userName;
+            }
+            if (userbirthplace != null) {
+              document.getElementById("birthplace").innerHTML = userbirthplace;
+            }
+            if (userCity != null) {
+              document.getElementById("city").innerHTML = userCity;
+            }
+          });
+        } else {
+          // No user is signed in.
+          console.log("No user is signed in");
+        }
+      });
+    }
+    populateInfo();
+
+    //background image store
+    var uploader = document.getElementById("uploader");
+    var fileButton = document.getElementById("fileButton");
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        currentUser = db.collection("users").doc(user.uid);
+        currentUser.get().then((userDoc) => {
+          fileButton.addEventListener("change", function (e) {
+            var userName = userDoc.data().name;
+            var file = e.target.files[0];
+            var storageRef = storage.ref(file.name);
+            storageRef.put(file);
+            console.log(file.name);
+            currentUser.update({
+              background: file.name,
+            });
+          });
+        });
+      }
+    });
   </script>
+  <script src="scripts/populateImage.js"></script>
 </html>

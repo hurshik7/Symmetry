@@ -21,50 +21,30 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
   <script src="/scripts/firebaseAPI.js"></script>
-  <script src="scripts/main.js"></script>
 
   <link rel="stylesheet" type="text/css" href="./styles/profile.css">
-
 </head>
 
 <body>
   <!--Navbar-->
   <nav class="navbar navbar-light" style="background-color: #e3f2fd">
     <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
-        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a href="main.html"><img src="images/logo.png" width="100" height="auto" /></a>
-      <button type="button" class="btn btn-outline-info">&#10133;</button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="settings.html">Settings ⚙️</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Make Folder 📁</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Add module ➕</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Dark Mode 🌙</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="profile.html">Profile 👤</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="login.html">Log-in / Log-out ✏️
-            </a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-          <button class="btn btn-outline-success" type="submit">
-            Search
-          </button>
-        </form>
+      <div>
+        <a href="main.html"
+          ><button type="button" class="btn btn-primary btn-md">
+            Back
+          </button></a
+        >
+      </div>
+      <a href="main.html" class="mx-auto"
+        ><img
+          src="images/logo.png"
+          width="100"
+          height="auto"
+          alt="symmetry_logo"
+      /></a>
+      <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
     </div>
   </nav>
@@ -99,7 +79,6 @@
   <!-- JS files: Your own JavaScript functions included here    -->
   <!--------------------------------------------------------------------->
   <script>
-    populateImage();
     var currentUser;
 
     function populateInfo() {
@@ -161,9 +140,9 @@
       })
       document.getElementById('personalInfoFields').disabled = true;
     }
-
   </script>
-
+  <!-- populate background image -->
+  <script src="/scripts/populateImage.js"></script>
 
 
 </body>
