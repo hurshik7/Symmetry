@@ -59,7 +59,10 @@ function insertNameAndAssignments() {
                       assClass + assName
                     }" class="added-card" onclick="editModalContentAndFoundAss('${assClass}', '${assName}', '${assDueDate}', '${assLabelColor}');">
                     <div class="card text-white bg-${assLabelColor} mb-3" style="max-width: 23rem;">
-                    <div class="card-header">${assClass}</div>
+                    <div class="card-header">
+                    ${assClass}
+                    <button class="btn btn-dark btn-sm float-end" onclick="clickDoneOnCard('${assClass}', '${assName}', '${assDueDate}', '${assLabelColor}');">Done</button>
+                    </div>
                     <div class="card-body">
                       <h5 class="card-title">${assName}</h5>
                       <p class="card-text">Due date: ${assDueDate}</p>
@@ -330,28 +333,6 @@ editModalSaveBtn.addEventListener(
   false
 );
 
-// I just left this code for the next sprint. - Shik
-//delete all assignments
-// let userID = getCurrentUserUid();
-//   var userAssignment = db.collection("Assignments").doc(userID);
-//   userAssignment.get().then(function (doc) {
-//     if (doc.exists) {
-//       userAssignment
-//         .update({
-//           count: firebase.firestore.FieldValue.increment(-1),
-//           assMap: firebase.firestore.FieldValue.delete(
-//             doc.data().assMap[clickedAssignmentKey]
-//           )
-//         })
-//         .then(function () {
-//           //console.log("assignment count -1");
-//           //console.log("assignment data deleted from firestore");
-//           alert(`Your assignment has been deleted!`);
-//           window.location.assign("main.html");
-//         });
-//     }
-//   });
-
 //sound control
 function playAssignmentCompleteSound() {
   var audio = new Audio("sounds/Complete_assignment2.mp3");
@@ -364,5 +345,33 @@ function moveToDone() {
     .then( function () {
       deleteAssignment("Assignments", false);
       playAssignmentCompleteSound();
+    })
+}
+
+function clickDoneOnCard(assNm, assCs, assDd, assLc) {
+  //Search and get a index of current assignmnet in the assList in Firebase
+  currentAss = { class: assCs, name: assNm, dueDate: assDd, labelColor: assLc };
+  //console.log(currentAss);
+  //console.log(typeof(currentAss));
+  let userID = getCurrentUserUid();
+  currentAssignment = db
+    .collection("Assignments")
+    .doc(userID)
+    .get()
+    .then(function (snap) {
+      currentAssignmentString = JSON.stringify(currentAss);
+      var assMap = snap.data().assMap;
+
+      for (i in assMap) {
+        tempAssignmentString = `{"class":"${assMap[i].class}","name":"${assMap[i].name}","dueDate":"${assMap[i].dueDate}","labelColor":"${assMap[i].labelColor}"}`;
+        //console.log(tempAssignmentString);
+        if (currentAssignmentString == tempAssignmentString) {
+          //console.log("Found!!");
+          clickedAssignmentKey = i;
+        }
+      }
+    })
+    .then(function() {
+      moveToDone();
     })
 }
