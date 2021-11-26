@@ -68,12 +68,6 @@ var uiConfig = {
 // The start method will wait until the DOM is loaded.
 ui.start('#firebaseui-auth-container', uiConfig);
 
-
-
  // Random Number Generator
- var images = ["url(./images/1BGPortraitImage.jpg)", "url(./images/2BGPortraitImage.jpg)", "url(./images/3BGPortraitImage.jpg)"];
- index = Math.floor(Math.random() * images.length);
- //console.log(index);
-
- //console.log(images[index]);
- //$('body').attr('background-image', images[index]);
+ var backgroundImages = "url(../images/" + (Math.floor(Math.random() * 7 + 1)) + "BGPortraitImage.jpg)";
+ $('body').css('background-image', backgroundImages);

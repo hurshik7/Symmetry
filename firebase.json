@@ -5,6 +5,18 @@
   },
   "hosting": {
     "public": ".",
+    "redirects": [
+      {
+        "source": "/index.html",
+        "destination": "/login.html",
+        "type": 301
+      },
+      {
+        "source": "/",
+        "destination": "/login.html",
+        "type": 301
+      }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",
