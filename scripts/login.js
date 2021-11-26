@@ -69,5 +69,6 @@ var uiConfig = {
 ui.start('#firebaseui-auth-container', uiConfig);
 
  // Random Number Generator
- var backgroundImages = "url(../images/" + (Math.floor(Math.random() * 7 + 1)) + "BGPortraitImage.jpg)";
+ let bgImageCount = 9;
+ var backgroundImages = "url(../images/" + (Math.floor(Math.random() * bgImageCount + 1)) + "BGPortraitImage.jpg)";
  $('body').css('background-image', backgroundImages);
