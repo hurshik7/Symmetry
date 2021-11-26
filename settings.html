@@ -48,71 +48,100 @@
       </div>
     </nav>
     <br /><br />
-    <div class="d-flex justify-content-center bg-transparent">
-      <div class="col-sm-6 d-flex p-2 bg-light justify-content-center rounded-2">
-        <h2 class="text-center">Settings</h2>
+    <div class="container bg-light rounded-2">
+      <div class="row justify-content-center">
+        <h1 class="text-center">Settings</h1>
       </div>
     </div>
     <br /><br />
-    <div class="container align-content-center col-sm-6">
-      <div class="card align-content-center">
-        <div class="card-body align-content-center">
-          <button type="button" class="btn btn-primary btn-md">Login</button>
-          <br />
-          <br />
-          Login/Signup
-        </div>
-        <div class="card">
-          <div class="card-body justify-content-center">
-            <a href="profile.html"
-              ><button type="button" class="btn btn-primary btn-md">
-                Profile
-              </button></a
-            >
-            <br />
-            <br />
-          </div>
-        </div>
-        <div class="card justify-content-center">
-          <div class="card-body justify-content-center">
-            <span>Name: </span>
-            <p id="name">Not set</p>
-            <span>Birthplace: </span>
-            <p id="birthplace">Not set</p>
-            <span>City: </span>
-            <p id="city">Not set</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <button type="button" class="btn btn-primary btn-md" id="dark-mode">
-              Enable
-            </button>
-            <br />
-            <br />
-            Click to enable dark theme
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <button type="button" class="btn btn-primary btn-md">
-              Colours
-            </button>
-            <br />
-            <br />
-            Choose default colours for assigments
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
+    <div class="container bg-light rounded-2">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-l-8 mx-auto">
+          <div class="my-4">
             <form>
-              <input type="file" id="fileButton" /><br /><br />
-              <button id="uploader" class="btn btn-primary btn-md">
-                Upload
-              </button>
+              <h3 style="text-align: center">Profile</h3>
+              <fieldset class="mb-3" id="personalInfoFields" disabled>
+                <div class="form-group">
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    id="nameInput"
+                    class="form-control"
+                    placeholder="Enter your name"
+                  />
+                </div>
+                <br />
+                <div class="form-group">
+                  <label>City</label>
+                  <input
+                    type="text"
+                    id="cityInput"
+                    class="form-control"
+                    placeholder="Enter your city"
+                  />
+                </div>
+              </fieldset>
+              <br />
+              <div
+                id="profile_function_btns"
+                class="d-flex justify-content-center mt-2"
+              >
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  onclick="editUserInfo()"
+                >
+                  Edit
+                </button>
+                <span style="width: 10px"></span>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="saveUserInfo()"
+                >
+                  Save
+                </button>
+              </div>
+              <hr class="my-4" />
+              <div class="container">
+                <div class="row justify-content-center">
+                  <h3 style="text-align: center">Choose a Custom Background Image</h3>
+                </div>
+              </div>
+              <br>
+              <div class="container">
+                <div class="row justify-content-center">
+                  <input
+                    type="file"
+                    id="fileButton"
+                    style="display: none"
+                  />
+                  <label
+                    for="fileButton"
+                    class="text-center w-50"
+                    style="
+                      background-color: #6c757d;
+                      color: white;
+                      padding: 0.5rem;
+                      font-family: sans-serif;
+                      border-radius: 0.3rem;
+                      cursor: pointer;
+                    "
+                    >Choose Image</label
+                  >
+                </div>
+              </div>
+              <br>
+              <div class="container">
+                <div class="row justify-content-center">
+                  <button id="uploader" class="btn btn-primary btn-md w-50">
+                    Upload
+                  </button>
+                </div>
+              </div>
+                </div>
+              </div>
             </form>
-            <br />
-            Choose a custom background image
           </div>
         </div>
       </div>
@@ -134,13 +163,14 @@
           currentUser.get().then((userDoc) => {
             //get the data fields of the user
             var userName = userDoc.data().name;
-            var userbirthplace = userDoc.data().birthplace;
             var userCity = userDoc.data().city;
+
+            //if the data fields are not empty, then write them in to the form.
             if (userName != null) {
-              document.getElementById("name").innerHTML = userName;
+              document.getElementById("nameInput").value = userName;
             }
             if (userCity != null) {
-              document.getElementById("city").innerHTML = userCity;
+              document.getElementById("cityInput").value = userCity;
             }
           });
         } else {
@@ -149,9 +179,33 @@
         }
       });
     }
+
+    //call the function to run it
     populateInfo();
 
+    function editUserInfo() {
+      //Enable the form fields
+      document.getElementById("personalInfoFields").disabled = false;
+    }
 
+    function saveUserInfo() {
+      // console.log("save is clicked")
+
+      //grab values from the form that the user inserted in each field
+      username = document.getElementById("nameInput").value;
+      birthplace = document.getElementById("birthplaceInput").value;
+      city = document.getElementById("cityInput").value;
+
+      // console.log("values are:", name, birthplace, city)
+
+      //write values in the database
+      currentUser.update({
+        name: username,
+        birthplace: birthplace,
+        city: city,
+      });
+      document.getElementById("personalInfoFields").disabled = true;
+    }
     //background image store
     var uploader = document.getElementById("uploader");
     var fileButton = document.getElementById("fileButton");
@@ -172,29 +226,7 @@
         });
       }
     });
-
-    populateInfo();
-
-function editUserInfo() {
-  //Enable the form fields
-  document.getElementById('personalInfoFields').disabled = false;
-}
-
-function saveUserInfo() {
-  // console.log("save is clicked")
-
-  //grab values from the form that the user inserted in each field
-  username = document.getElementById('nameInput').value;
-  city = document.getElementById('cityInput').value;
-
-  // console.log("values are:", name, birthplace, city)
-
-  //write values in the database
-  currentUser.update({
-    name: username,
-    city: city
-  })
-  document.getElementById('personalInfoFields').disabled = true;
-}
   </script>
+  <!-- populate background image -->
+  <script src="/scripts/populateImage.js"></script>
 </html>

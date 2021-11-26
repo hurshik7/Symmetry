@@ -46,13 +46,15 @@
         </div>
       </div>
     </nav>
-    <br>
+    <br />
     <div class="d-flex justify-content-center bg-transparent">
-      <div class="col-sm-6 d-flex p-2 bg-light justify-content-center rounded-2">
+      <div
+        class="col-sm-6 d-flex p-2 bg-light justify-content-center rounded-2"
+      >
         <h2 class="text-center">Settings</h2>
       </div>
     </div>
-    <br>
+    <br />
     <div class="container bg-light">
       <div class="row justify-content-center">
         <div class="col-12 col-lg-10 col-l-8 mx-auto">
@@ -60,137 +62,122 @@
             <form>
               <hr class="my-4" />
               <div class="form-row">
-                <fieldset class="form-group col-md-6" id="personalInfoFields" disabled>
-                  <label>Name</label>
-                  <input
-                    type="text"
-                    id="nameInput"
-                    class="form-control"
-                    placeholder="Not set"
-                  />
-                  <label>City</label>
-                  <input
-                    type="text"
-                    id="cityInput"
-                    class="form-control"
-                    placeholder="Not set"
-                  />
+                <fieldset
+                  class="form-group col-md-6"
+                  id="personalInfoFields"
+                  disabled
+                >
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input
+                      type="text"
+                      id="nameInput"
+                      class="form-control"
+                      placeholder="Enter your name"
+                    />
+                  </div>
 
-              </fieldset>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail4">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="inputEmail4"
-                  placeholder="brown@asher.me"
-                />
-              </div>
-              <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
-              <span style="width: 10px"></span>
-              <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
-              <hr class="my-4" />
-              <div class="row mb-4">
-                <div class="col-md-6">
                   <div class="form-group">
-                    <label for="inputPassword4">Old Password</label>
+                    <label>City</label>
                     <input
-                      type="password"
+                      type="text"
+                      id="cityInput"
                       class="form-control"
-                      id="inputPassword5"
+                      placeholder="Enter your city"
                     />
                   </div>
-                  <div class="form-group">
-                    <label for="inputPassword5">New Password</label>
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="inputPassword5"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="inputPassword6">Confirm Password</label>
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="inputPassword6"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <p class="mb-2">Password requirements</p>
-                  <p class="small text-muted mb-2">
-                    To create a new password, you have to meet all of the
-                    following requirements:
-                  </p>
-                  <ul class="small text-muted pl-4 mb-0">
-                    <li>Minimum 8 character</li>
-                    <li>At least one special character</li>
-                    <li>At least one number</li>
-                    <li>Can’t be the same as a previous password</li>
-                  </ul>
-                </div>
+                </fieldset>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  onclick="editUserInfo()"
+                >
+                  Edit
+                </button>
+                <span style="width: 10px"></span>
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  onclick="saveUserInfo()"
+                >
+                  Save
+                </button>
               </div>
-              <button type="submit" class="btn btn-primary">Save Change</button>
             </form>
           </div>
         </div>
       </div>
     </div>
   </body>
-  <script src="/scripts/populateImage.js"></script>
+  <script src="/scripts/populateImage.js">populateImage();</script>
+  <script src="/scripts/main.js"></script>
   <script>
-    populateImage();
     var currentUser;
 
-    function populateInfo() {
-      firebase.auth().onAuthStateChanged((user) => {
-        // Check if user is signed in:
-        if (user) {
-          //go to the correct user document by referencing to the user uid
-          currentUser = db.collection("users").doc(user.uid);
-          //get the document for current user.
-          currentUser.get().then((userDoc) => {
-            //get the data fields of the user
-            var userName = userDoc.data().name;
-            var userCity = userDoc.data().city;
-            if (userName != null) {
-              document.getElementById("name").innerHTML = userName;
-            }
-            if (userCity != null) {
-              document.getElementById("city").innerHTML = userCity;
-            }
-          });
-        } else {
-          // No user is signed in.
-          console.log("No user is signed in");
-        }
-      });
+function populateInfo() {
+  firebase.auth().onAuthStateChanged(user => {
+    // Check if user is signed in:
+    if (user) {
+
+      //go to the correct user document by referencing to the user uid
+      currentUser = db.collection("users").doc(user.uid)
+      //get the document for current user.
+      currentUser.get()
+        .then(userDoc => {
+          //get the data fields of the user
+          var userName = userDoc.data().name;
+          var userbirthplace = userDoc.data().birthplace;
+          var userCity = userDoc.data().city;
+
+          //if the data fields are not empty, then write them in to the form.
+          if (userName != null) {
+            document.getElementById("nameInput").value = userName;
+          }
+          if (userbirthplace != null) {
+            document.getElementById("birthplaceInput").value = userbirthplace;
+          }
+          if (userCity != null) {
+            document.getElementById("cityInput").value = userCity;
+          }
+        })
+    } else {
+      // No user is signed in.
+      console.log("No user is signed in");
     }
-    populateInfo();
+  });
+}
 
-    function editUserInfo() {
-      //Enable the form fields
-      document.getElementById('personalInfoFields').disabled = false;
-    }
+//call the function to run it 
+populateInfo();
 
-    function saveUserInfo() {
-      // console.log("save is clicked")
+function editUserInfo() {
+  //Enable the form fields
+  document.getElementById('personalInfoFields').disabled = false;
+}
 
-      //grab values from the form that the user inserted in each field
-      username = document.getElementById('nameInput').value;
-      city = document.getElementById('cityInput').value;
+function saveUserInfo() {
+  // console.log("save is clicked")
 
-      // console.log("values are:", name, birthplace, city)
+  //grab values from the form that the user inserted in each field
+  username = document.getElementById('nameInput').value;
+  birthplace = document.getElementById('birthplaceInput').value;
+  city = document.getElementById('cityInput').value;
 
-      //write values in the database
-      currentUser.update({
-        name: username,
-        city: city
-      })
-      document.getElementById('personalInfoFields').disabled = true;
-    }
+  // console.log("values are:", name, birthplace, city)
+
+  //write values in the database
+  currentUser.update({
+    name: username,
+    birthplace: birthplace,
+    city: city
+  })
+  document.getElementById('personalInfoFields').disabled = true;
+}
+</script>
+<!-- populate background image -->
+<script src="/scripts/populateImage.js"></script>
+
+
     //background image store
     var uploader = document.getElementById("uploader");
     var fileButton = document.getElementById("fileButton");
