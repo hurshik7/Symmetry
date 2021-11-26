@@ -49,12 +49,12 @@
     </nav>
     <br /><br />
     <div class="d-flex justify-content-center bg-transparent">
-      <div class="w-50 d-flex p-2 bg-light justify-content-center rounded-2">
+      <div class="col-sm-6 d-flex p-2 bg-light justify-content-center rounded-2">
         <h2 class="text-center">Settings</h2>
       </div>
     </div>
     <br /><br />
-    <div class="container align-content-center">
+    <div class="container align-content-center col-sm-6">
       <div class="card align-content-center">
         <div class="card-body align-content-center">
           <button type="button" class="btn btn-primary btn-md">Login</button>
@@ -139,9 +139,6 @@
             if (userName != null) {
               document.getElementById("name").innerHTML = userName;
             }
-            if (userbirthplace != null) {
-              document.getElementById("birthplace").innerHTML = userbirthplace;
-            }
             if (userCity != null) {
               document.getElementById("city").innerHTML = userCity;
             }
@@ -175,5 +172,29 @@
         });
       }
     });
+
+    populateInfo();
+
+function editUserInfo() {
+  //Enable the form fields
+  document.getElementById('personalInfoFields').disabled = false;
+}
+
+function saveUserInfo() {
+  // console.log("save is clicked")
+
+  //grab values from the form that the user inserted in each field
+  username = document.getElementById('nameInput').value;
+  city = document.getElementById('cityInput').value;
+
+  // console.log("values are:", name, birthplace, city)
+
+  //write values in the database
+  currentUser.update({
+    name: username,
+    city: city
+  })
+  document.getElementById('personalInfoFields').disabled = true;
+}
   </script>
 </html>
