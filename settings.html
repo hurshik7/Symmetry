@@ -20,10 +20,12 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
   <script src="scripts/firebaseAPI.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="./styles/setting.css" />
 </head>
 
 <body style="background-size: cover">
-  <nav class="navbar navbar-light" style="background-color: #e3f2fd">
+  <nav class="navbar navbar-light" id="nav-content">
     <div class="container-fluid justify-content-center">
       <div>
         <a href="main.html"><button type="button" class="btn btn-primary btn-md">
@@ -49,7 +51,7 @@
       <div class="col-12 col-lg-10 col-l-8 mx-auto">
         <div class="my-4">
           <form>
-            <h3 style="text-align: center">Profile</h3>
+            <h3>Profile</h3>
             <fieldset class="mb-3" id="personalInfoFields" disabled>
               <div class="form-group">
                 <label>Name</label>
@@ -66,7 +68,7 @@
               <button type="button" class="btn btn-secondary" onclick="editUserInfo()">
                 Edit
               </button>
-              <span style="width: 10px"></span>
+              <span id="gap"></span>
               <button type="button" class="btn btn-primary" onclick="saveUserInfo()">
                 Save
               </button>
@@ -74,21 +76,14 @@
             <hr class="my-4" />
             <div class="container">
               <div class="row justify-content-center">
-                <h3 style="text-align: center">Choose a Custom Background Image</h3>
+                <h3>Choose a Custom Background Image</h3>
               </div>
             </div>
             <br>
             <div class="container">
               <div class="row justify-content-center">
-                <input type="file" id="fileButton" style="display: none" />
-                <label for="fileButton" class="text-center w-50" style="
-                      background-color: #6c757d;
-                      color: white;
-                      padding: 0.5rem;
-                      font-family: sans-serif;
-                      border-radius: 0.3rem;
-                      cursor: pointer;
-                    ">Choose Image</label>
+                <input type="file" id="fileButton"/>
+                <label for="fileButton" class="btn btn-secondary w-50">Choose Image</label>
               </div>
             </div>
             <br>
@@ -102,7 +97,7 @@
             <hr class="my-4" />
             <div class="container">
               <div class="row justify-content-center">
-                <h3 style="text-align: center">Log-Out</h3>
+                <h3 id="log-out-header">Log-Out</h3>
               </div>
             </div>
             <br>
@@ -118,86 +113,8 @@
     </div>
   </div>
 
+  <script src="/scripts/setting.js"></script>
   <script src="/scripts/populateImage.js"></script>
-  <script>
-    populateImage();
-    var currentUser;
-
-    function populateInfo() {
-      firebase.auth().onAuthStateChanged((user) => {
-        // Check if user is signed in:
-        if (user) {
-          //go to the correct user document by referencing to the user uid
-          currentUser = db.collection("users").doc(user.uid);
-          //get the document for current user.
-          currentUser.get().then((userDoc) => {
-            //get the data fields of the user
-            var userName = userDoc.data().name;
-            var userCity = userDoc.data().city;
-
-            //if the data fields are not empty, then write them in to the form.
-            if (userName != null) {
-              document.getElementById("nameInput").value = userName;
-            }
-            if (userCity != null) {
-              document.getElementById("cityInput").value = userCity;
-            }
-          });
-        } else {
-          // No user is signed in.
-          console.log("No user is signed in");
-        }
-      });
-    }
-
-    //call the function to run it
-    populateInfo();
-
-    function editUserInfo() {
-      //Enable the form fields
-      document.getElementById("personalInfoFields").disabled = false;
-    }
-
-    function saveUserInfo() {
-      // console.log("save is clicked")
-
-      //grab values from the form that the user inserted in each field
-      username = document.getElementById("nameInput").value;
-      city = document.getElementById("cityInput").value;
-
-      // console.log("values are:", name, birthplace, city)
-
-      //write values in the database
-      currentUser.update({
-        name: username,
-        city: city,
-      });
-      document.getElementById("personalInfoFields").disabled = true;
-    }
-    //background image store
-    var uploader = document.getElementById("uploader");
-    var fileButton = document.getElementById("fileButton");
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        currentUser = db.collection("users").doc(user.uid);
-        currentUser.get().then((userDoc) => {
-          fileButton.addEventListener("change", function (e) {
-            var userName = userDoc.data().name;
-            var file = e.target.files[0];
-            var storageRef = storage.ref(file.name);
-            storageRef.put(file);
-            console.log(file.name);
-            currentUser.update({
-              background: file.name,
-            });
-          });
-        });
-      }
-    });
-  </script>
-  <!-- populate background image -->
-  <script src="/scripts/populateImage.js"></script>
-
 </body>
 
 </html>

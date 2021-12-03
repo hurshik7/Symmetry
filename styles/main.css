@@ -103,3 +103,7 @@ a .card:hover {
 .bg-quarts {
     background-color: #F7CAC9 !important;
 }
+
+#nav-bar {
+    background-color: #e3f2fd;
+}
