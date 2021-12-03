@@ -18,14 +18,14 @@ function insertNameAndAssignments() {
       //go to the correct user document by referencing to the user uid
       currentUser = db.collection("users").doc(user.uid);
       //get the document for current user.
-      currentUser.get().then((userDoc) => {
-        var user_Name = userDoc.data().name;
-        console.log(user_Name);
-        //method #1:  insert with html only
-        //document.getElementById("name-goes-here").innerText = n;    //using javascript
-        //method #2:  insert using jquery
-        currentUserName = user_Name;
-        $("#name-goes-here").text(user_Name); //using jquery
+
+      db.collection("users").where("id", "==", user.uid)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            currentUserName = doc.data().name;
+          })
+          $("#name-goes-here").text(currentUserName); //using jquery
       });
 
       currentAssignment = db
@@ -87,7 +87,6 @@ insertNameAndAssignments();
 var clikedColor = undefined;
 
 function getAssignmentCount() {
-  console.log("got into getAssignmentCount()");
   count = db
     .collection("Assignments")
     .doc(getCurrentUserUid())
@@ -186,6 +185,7 @@ function editModalContentAndFoundAss(assCs, assNm, assDd, assLc) {
       currentAssignmentString = JSON.stringify(currentAss);
       var assMap = snap.data().assMap;
 
+      //make this query (Shik)
       for (i in assMap) {
         tempAssignmentString = `{"class":"${assMap[i].class}","name":"${assMap[i].name}","dueDate":"${assMap[i].dueDate}","labelColor":"${assMap[i].labelColor}"}`;
         //console.log(tempAssignmentString);
@@ -374,4 +374,4 @@ function clickDoneOnCard(assNm, assCs, assDd, assLc) {
     .then(function() {
       moveToDone();
     })
-}
+  }
