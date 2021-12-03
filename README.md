@@ -45,20 +45,20 @@ It has the following subfolders and files:
     ├── 9BGPortraitImage.jpg
     └── logo.png                    # logo image
 ├── scripts                         # Folder for scripts
-    ├── done.js                     #
-    ├── firebaseAPI.js              #
-    ├── login.js                    #
-    ├── main.js                     #
-    ├── populateImage.js            #
-    └── setting.js                  #
+    ├── done.js                     # script file for done page
+    ├── firebaseAPI.js              # firebase API file
+    ├── login.js                    # script file for login page
+    ├── main.js                     # script file for main page
+    ├── populateImage.js            # script for populating background img
+    └── setting.js                  # script file for setting page
 ├── sounds                          # Folder for sound files
     ├── complete-assignment1.wav    #  
-    └── complete-assignment2.mp3    #
+    └── complete-assignment2.mp3    # sound file for the done sound effect
 ├── styles                          # Folder for styles
-    ├── done.css                    #
-    ├── login.css                   #
-    ├── main.css                    #
-    └── setting.css                 #
+    ├── done.css                    # stylesheet for done page
+    ├── login.css                   # stylesheet for login page
+    ├── main.css                    # stylesheet for main page
+    └── setting.css                 # stylesheet for setting page
 
 Firebase hosting files: 
 ├── .firebaserc...
