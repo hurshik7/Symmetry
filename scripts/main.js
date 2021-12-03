@@ -336,7 +336,7 @@ editModalSaveBtn.addEventListener(
 
 //sound control
 function playAssignmentCompleteSound() {
-  var audio = new Audio("sounds/Complete_assignment2.mp3");
+  var audio = new Audio("sounds/complete-assignment2.mp3");
   audio.play();
 }
 
