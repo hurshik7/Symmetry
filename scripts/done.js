@@ -140,19 +140,17 @@ async function saveEditedInfoToFirestore(collectionName) {
   updateAss[keyStringTemplate + "labelColor"] = assignmentColor;
 
   let updateNested = undefined;
-  updateNested = db
-    .collection(collectionName)
-    .doc(userID);
-    updateNested.update(updateAss);
-    updateNested.update({
-      count: firebase.firestore.FieldValue.increment(1)
+  updateNested = db.collection(collectionName).doc(userID);
+  updateNested.update(updateAss);
+  updateNested
+    .update({
+      count: firebase.firestore.FieldValue.increment(1),
     })
     .then(function () {
       console.log("edited assignment info added to firestore");
       if (collectionName == "Done") {
-        alert('Your assignment has been edited!');
-      }
-      else {
+        alert("Your assignment has been edited!");
+      } else {
         alert(`Your assignment has been put back!`);
       }
       window.location.assign("done.html");

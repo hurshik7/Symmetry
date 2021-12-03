@@ -41,7 +41,7 @@ a .card:hover {
 }
 
 .bg-violet {
-    background-color: #6B5B95!important;
+    background-color: #6B5B95 !important;
 }
 
 .btn-turquoise {
@@ -53,7 +53,7 @@ a .card:hover {
 }
 
 .bg-turquoise {
-    background-color: turquoise!important;
+    background-color: turquoise !important;
 }
 
 .btn-dodgerblue {
@@ -65,7 +65,7 @@ a .card:hover {
 }
 
 .bg-dodgerblue {
-    background-color: dodgerblue!important;
+    background-color: dodgerblue !important;
 }
 
 .btn-greenery {
@@ -77,7 +77,7 @@ a .card:hover {
 }
 
 .bg-greenery {
-    background-color: #88B04B!important;
+    background-color: #88B04B !important;
 }
 
 .btn-serenity {
@@ -89,7 +89,7 @@ a .card:hover {
 }
 
 .bg-serenity {
-    background-color: #92A8D1!important;
+    background-color: #92A8D1 !important;
 }
 
 .btn-quarts {
@@ -101,5 +101,5 @@ a .card:hover {
 }
 
 .bg-quarts {
-    background-color: #F7CAC9!important;
+    background-color: #F7CAC9 !important;
 }

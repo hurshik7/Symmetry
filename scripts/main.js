@@ -19,14 +19,15 @@ function insertNameAndAssignments() {
       currentUser = db.collection("users").doc(user.uid);
       //get the document for current user.
 
-      db.collection("users").where("id", "==", user.uid)
+      db.collection("users")
+        .where("id", "==", user.uid)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             currentUserName = doc.data().name;
-          })
+          });
           $("#name-goes-here").text(currentUserName); //using jquery
-      });
+        });
 
       currentAssignment = db
         .collection("Assignments")
@@ -228,7 +229,7 @@ async function makeDoneCollection() {
           });
       }
     });
-    return true;
+  return true;
 }
 
 async function saveEditedInfoToFirestore(collectionName) {
@@ -341,11 +342,10 @@ function playAssignmentCompleteSound() {
 
 //move to Done! (remove from Assignments collection and add the assignment to Done collections)
 function moveToDone() {
-  saveEditedInfoToFirestore("Done")
-    .then( function () {
-      deleteAssignment("Assignments", false);
-      playAssignmentCompleteSound();
-    })
+  saveEditedInfoToFirestore("Done").then(function () {
+    deleteAssignment("Assignments", false);
+    playAssignmentCompleteSound();
+  });
 }
 
 function clickDoneOnCard(assNm, assCs, assDd, assLc) {
@@ -371,7 +371,7 @@ function clickDoneOnCard(assNm, assCs, assDd, assLc) {
         }
       }
     })
-    .then(function() {
+    .then(function () {
       moveToDone();
-    })
-  }
+    });
+}
