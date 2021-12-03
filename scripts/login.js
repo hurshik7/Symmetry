@@ -75,10 +75,14 @@ var uiConfig = {
 // The start method will wait until the DOM is loaded.
 ui.start("#firebaseui-auth-container", uiConfig);
 
-// Random Number Generator
-let bgImageCount = 9;
-var backgroundImages =
-  "url(../images/" +
-  Math.floor(Math.random() * bgImageCount + 1) +
-  "BGPortraitImage.jpg)";
-$("body").css("background-image", backgroundImages);
+// Set random background image.
+function setRandomBGImage() {
+  // Random Number Generator
+  let bgImageCount = 9;
+  var backgroundImages =
+    "url(../images/" +
+    Math.floor(Math.random() * bgImageCount + 1) +
+    "BGPortraitImage.jpg)";
+  $("body").css("background-image", backgroundImages);
+}
+setRandomBGImage();
