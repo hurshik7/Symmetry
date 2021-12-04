@@ -3,17 +3,8 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 var uiConfig = {
   callbacks: {
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      // User successfully signed in.
-      // Return type determines whether we continue the redirect automatically
-      // or whether we leave that to developer to handle.
-      //------------------------------------------------------------------------------------------
-      // The code below is modified from default snippet provided by the FB documentation.
-      //
       // If the user is a "brand new" user, then create a new "user" in your own database.
       // Assign this user with the name and email provided.
-      // Before this works, you must enable "Firestore" from the firebase console.
-      // The Firestore rules must allow the user to write.
-      //------------------------------------------------------------------------------------------
       var user = authResult.user; // get the user object from the Firebase authentication database
       if (authResult.additionalUserInfo.isNewUser) {
         //if new user
@@ -24,15 +15,15 @@ var uiConfig = {
           id: user.uid,
         });
         db.collection("Assignments").doc(user.uid).set({
-          assMap: {},
-          count: 0,
-          assMapKey: 0,
+          assMap: {}, // "Assignments" collection
+          count: 0,   // count: the number of assignment objects
+          assMapKey: 0, // assMapKey: key for the assignment objects. It will be incremented when an assignment is added.
         });
         db.collection("Done")
           .doc(user.uid)
           .set({
-            assMap: {},
-            count: 0,
+            assMap: {}, // "Done" collection
+            count: 0,   // count: the number of finished assignment objects
           })
           .then(function () {
             console.log(
@@ -58,7 +49,6 @@ var uiConfig = {
   signInFlow: "popup",
   signInSuccessUrl: "main.html",
   signInOptions: [
-    // Leave the lines as is for the providers you want to offer your users.
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
     //firebase.auth.TwitterAuthProvider.PROVIDER_ID,

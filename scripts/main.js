@@ -1,5 +1,6 @@
 var currentUserName = undefined;
 
+// get current user uid
 function getCurrentUserUid() {
   currentUser = firebase.auth().currentUser;
   if (currentUser != null) {
@@ -9,16 +10,12 @@ function getCurrentUserUid() {
   return null;
 }
 
+// insert current user's name and their assignments in DB.
 function insertNameAndAssignments() {
   firebase.auth().onAuthStateChanged((user) => {
     // Check if user is signed in:
     if (user) {
-      // Do something for the current logged-in user here:
-      //console.log(user.uid);
-      //go to the correct user document by referencing to the user uid
-      currentUser = db.collection("users").doc(user.uid);
-      //get the document for current user.
-
+      // get the user's name by using query (where) 
       db.collection("users")
         .where("id", "==", user.uid)
         .get()
@@ -26,35 +23,41 @@ function insertNameAndAssignments() {
           querySnapshot.forEach((doc) => {
             currentUserName = doc.data().name;
           });
+          // display user's name
           $("#name-goes-here").text(currentUserName); //using jquery
         });
 
+      // display user's assignments
+      // access user's document in the Assignments collection
       currentAssignment = db
         .collection("Assignments")
         .doc(user.uid)
         .get()
         .then(function (snap) {
+          // get the map of assignments(assMap) and count from DB.
           var assMap = snap.data().assMap;
           var assCount = snap.data().count;
 
+          // If there's even one assignment, it reduces the space in the welcome message div.
           if (assCount != 0) {
             $("#greeting-container").attr(
               "class",
               "p-3 mb-2 bg-light rounded-3"
             );
-            $("#greeting-container-2").attr("class", "container-fluid py-1");
-            $("#greeting-message").text("");
-            $("#greeting-heading").replaceWith(
+            $("#greeting-container-2").attr("class", "container-fluid py-1"); // change class (bootstrap)
+            $("#greeting-message").text(""); // delete greeting message part
+            $("#greeting-heading").replaceWith( 
               `<p class="col-md-5 fs-5" id="greeting-heading" style="font-weight: bold;">Welcome back! ${currentUserName}</p>`
             );
 
+            // iterate the assignment map in the DB and get the information of user's assignments
             for (i in assMap) {
               let assName = assMap[i].name;
               let assClass = assMap[i].class;
               let assDueDate = assMap[i].dueDate;
               let assLabelColor = assMap[i].labelColor;
-              //console.log(assName, assClass, assDueDate, assLabelColor);
 
+              // populate the assignment card with its information
               var cardTemplate = `
                     <a id="${
                       assClass + assName
@@ -69,6 +72,7 @@ function insertNameAndAssignments() {
                       <p class="card-text">Due date: ${assDueDate}</p>
                     </div>
                     </div></a>`;
+              // display the assignment card
               $(".card-container").append(cardTemplate);
             }
           }
@@ -84,9 +88,9 @@ function insertNameAndAssignments() {
 }
 insertNameAndAssignments();
 
-//Send the assignment information to firestore when users click 'save' button
 var clikedColor = undefined;
 
+// get the number of user's assignments
 function getAssignmentCount() {
   count = db
     .collection("Assignments")
@@ -103,20 +107,18 @@ function getAssignmentCount() {
     });
 }
 
+// Send the assignment information to firestore when users click 'save' button
 function saveModalInfoToFirestore() {
+  // get the information of assignment from user's input (Modal)
   assignmentName = document.querySelector("#AssignmentInput");
-  //console.log(assignmentName.value);
   assignmentClass = document.querySelector("#ClassInput");
-  //console.log(assignmentClass.value);
   assignmentDuedate = document.querySelector("#DuedateInput");
-  //console.log(assignmentDuedate.value);
   assignmentColor = clikedColor;
-  //console.log(assignmentColor)
 
   let userID = getCurrentUserUid();
   var userAssignment = db.collection("Assignments").doc(userID);
 
-  var assCount = undefined;
+  // add the assignment to firestore
   db.collection("Assignments")
     .doc(getCurrentUserUid())
     .get()
@@ -125,7 +127,7 @@ function saveModalInfoToFirestore() {
         key = doc.data().assMapKey;
         var updateAss = {};
         let keyTemplate = "assMap." + key + ".";
-        console.log(keyTemplate);
+        //update the assignment map with new data
         updateAss[keyTemplate + "class"] = assignmentClass.value;
         updateAss[keyTemplate + "name"] = assignmentName.value;
         updateAss[keyTemplate + "dueDate"] = assignmentDuedate.value;
@@ -137,61 +139,57 @@ function saveModalInfoToFirestore() {
             assMapKey: firebase.firestore.FieldValue.increment(1),
           })
           .then(function () {
-            console.log("assignment count +1 (Map)");
-            console.log("assMapKey + 1");
-            console.log("assignment info added to firestore (Map)");
+            // show alert saying the assignment is added
             alert(
               `Your assignment ${assignmentClass.value}, ${assignmentName.value} has been added!`
             );
+            // go back to main page
             window.location.assign("main.html");
           });
       }
     });
 }
 
+// get the color an user clicked and store it to global variable
 function change_picked_color(pickedColor = "primary") {
-  //console.log("Clicked!", pickedColor)
   clikedColor = pickedColor;
 }
 
 clickedAssignmentKey = undefined;
 clickedAssignmentString = undefined;
 
+// auto populate the information of assignment in the modal window when user clicks it
 function editModalContentAndFoundAss(assCs, assNm, assDd, assLc) {
-  //Pass the information of clicked assignment
-  //console.log(assCs, assNm, assDd, assLc);
+  // pass the information of clicked assignment
   $("button:contains(current)").text("");
 
+  // assign the information of assignment and display the information
   document.getElementById("edit_assignment_name_here").value = assNm;
   document.getElementById("edit_class_here").value = assCs;
   document.getElementById("edit_due_date_here").value = assDd;
   let currentColorID = "#edit_" + assLc;
   let buttonClass = $(currentColorID).attr("class");
-  //console.log(buttonClass);
   $(currentColorID).text("current");
-
-  //Found the assignment in the firesotre.
   clikedColor = assLc;
 
   //Search and get a index of current assignmnet in the assList in Firebase
   currentAss = { class: assCs, name: assNm, dueDate: assDd, labelColor: assLc };
-  //console.log(currentAss);
-  //console.log(typeof(currentAss));
   let userID = getCurrentUserUid();
   currentAssignment = db
     .collection("Assignments")
     .doc(userID)
     .get()
     .then(function (snap) {
+      // make a string with the assignment data (serialization)
       currentAssignmentString = JSON.stringify(currentAss);
       var assMap = snap.data().assMap;
 
-      //make this query (Shik)
+      // find the assignment in the DB
       for (i in assMap) {
+        // serialize the assignment object in the DB and compare with the string of clicked assignment
         tempAssignmentString = `{"class":"${assMap[i].class}","name":"${assMap[i].name}","dueDate":"${assMap[i].dueDate}","labelColor":"${assMap[i].labelColor}"}`;
-        //console.log(tempAssignmentString);
         if (currentAssignmentString == tempAssignmentString) {
-          //console.log("Found!!");
+          // store the key in the global variable
           clickedAssignmentKey = i;
           clickedAssignmentString = tempAssignmentString;
         }
@@ -200,8 +198,6 @@ function editModalContentAndFoundAss(assCs, assNm, assDd, assLc) {
     .then(function () {
       //show modal window to users.
       $("#edit_AssignmentModal").modal("show");
-      //console.log(clickedAssignmentKey);
-      //console.log(clickedAssignmentString);
     });
 }
 
@@ -232,17 +228,17 @@ async function makeDoneCollection() {
   return true;
 }
 
+// edit assignment 
 async function saveEditedInfoToFirestore(collectionName) {
+  // get the information of edited assignment
   assignmentName = document.querySelector("#edit_assignment_name_here");
-  //console.log(assignmentName.value);
   assignmentClass = document.querySelector("#edit_class_here");
-  //console.log(assignmentClass.value);
   assignmentDuedate = document.querySelector("#edit_due_date_here");
-  //console.log(assignmentDuedate.value);
   assignmentColor = clikedColor;
-  //console.log(assignmentColor);
 
+  // get current user's uid
   let userID = getCurrentUserUid();
+  // make new object of assignment with edited information
   var updateAss = {};
   let keyStringTemplate = "assMap." + clickedAssignmentKey + ".";
   updateAss[keyStringTemplate + "class"] = assignmentClass.value;
@@ -251,28 +247,31 @@ async function saveEditedInfoToFirestore(collectionName) {
   updateAss[keyStringTemplate + "labelColor"] = assignmentColor;
 
   let updateNested = undefined;
+  // if collectionName (parameter) is "Done", edit the assignment in the "Done" collection
   if (collectionName == "Done") {
-    //console.log(updateAss);
     makeDoneCollection().then(function () {
+      // update the assignment with edited information
       updateNested = db.collection(collectionName).doc(userID);
-      console.log(updateAss);
       updateNested.update(updateAss);
       updateNested
         .update({
+          // increment count variable
           count: firebase.firestore.FieldValue.increment(1),
         })
         .then(function () {
           console.log("The assignment moved to DONE page!");
+          // show alert 
           alert(
             `[${assignmentClass.value}] ${assignmentName.value} moved to DONE page!`
           );
+          // go back to main page
           window.location.assign("main.html");
         })
         .catch(function (error) {
           console.log("Error moving to done: " + error);
         });
     });
-  } else {
+  } else { // if the collectionName(parameter) is "Assignments", edit the assignment in the "Assignments" collection
     updateNested = db
       .collection(collectionName)
       .doc(userID)
@@ -288,20 +287,23 @@ async function saveEditedInfoToFirestore(collectionName) {
   }
 }
 
+// delete an assignment
 function deleteAssignment(collectionName, isDeleteBtn) {
+  // if this function invoked by clicking "Delete" button on the modal then pop up confirmation window and get user's choice
   if (isDeleteBtn) {
+    // if user clicks "no", stop deleting the assignment
     if (confirm("Are you sure to delete it?") == false) {
       return;
     }
   }
 
-  //console.log(clickedAssignmentKey);
   let userID = getCurrentUserUid();
   var userAssignment = db.collection(collectionName).doc(userID);
   userAssignment.get().then(function (doc) {
     if (doc.exists) {
       userAssignment.set(
         {
+          // delete the clicked assignment from the assignment map in the DB
           assMap: {
             [clickedAssignmentKey]: firebase.firestore.FieldValue.delete(),
           },
@@ -311,11 +313,11 @@ function deleteAssignment(collectionName, isDeleteBtn) {
 
       userAssignment
         .update({
+          // decrement the count variable
           count: firebase.firestore.FieldValue.increment(-1),
         })
         .then(function () {
-          console.log("assignment count -1");
-          //console.log("assignment data deleted from firestore");
+          // show alert
           alert(`Your assignment has been deleted!`);
           window.location.assign("main.html");
         });
@@ -323,6 +325,7 @@ function deleteAssignment(collectionName, isDeleteBtn) {
   });
 }
 
+// set up eventlistener
 var modalSaveBtn = document.querySelector("#modal-save-button");
 modalSaveBtn.addEventListener("click", saveModalInfoToFirestore);
 var editModalSaveBtn = document.querySelector("#edit-modal-save-button");
@@ -348,11 +351,10 @@ function moveToDone() {
   });
 }
 
+// move an assignment to Done page when user click the "Done" button on the card (not in the modal)
 function clickDoneOnCard(assNm, assCs, assDd, assLc) {
   //Search and get a index of current assignmnet in the assList in Firebase
   currentAss = { class: assCs, name: assNm, dueDate: assDd, labelColor: assLc };
-  //console.log(currentAss);
-  //console.log(typeof(currentAss));
   let userID = getCurrentUserUid();
   currentAssignment = db
     .collection("Assignments")
@@ -362,11 +364,10 @@ function clickDoneOnCard(assNm, assCs, assDd, assLc) {
       currentAssignmentString = JSON.stringify(currentAss);
       var assMap = snap.data().assMap;
 
+      // find the assignment by iterating assignment map in the DB
       for (i in assMap) {
         tempAssignmentString = `{"class":"${assMap[i].class}","name":"${assMap[i].name}","dueDate":"${assMap[i].dueDate}","labelColor":"${assMap[i].labelColor}"}`;
-        //console.log(tempAssignmentString);
         if (currentAssignmentString == tempAssignmentString) {
-          //console.log("Found!!");
           clickedAssignmentKey = i;
         }
       }
