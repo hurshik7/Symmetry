@@ -24,11 +24,11 @@ Content of the project folder:
  Top level of project folder: 
 ├── .gitignore                      # Git ignore file
 ├── 404.html                        # 404 html error page
-├── done.html                       # done page
-├── login.html                      # login page
-├── main.html                       # main page
+├── done.html                       # html page for Done menu
+├── login.html                      # html page for login
+├── main.html                       # html page for main
 ├── README.md                       # README file
-└── setting.html                    # setting page
+└── setting.html                    # html page for setting
 
 It has the following subfolders and files:
 ├── .git                            # Folder for git repo
@@ -68,3 +68,16 @@ Firebase hosting files:
 └── storage.rules
 
 ```
+
+## Resources
+- Symmetry logo from Looka(Open Source https://looka.com/)
+
+## Contact
+* Shik Hur - hurshik7@gmail.com
+* Ethan Johnston - ethan_johnston13@hotmail.com
+* Shey Barpagga - sheybarpagga@gmail.com
+
+## Acknowledgements 
+* <a href="https://interfacelift.com/">Interfacelift Wallpaper</a>
+* <a href="https://fonts.google.com/">Google Fonts</a>
+* <a href="https://getbootstrap.com/">Bootstrap</a>
