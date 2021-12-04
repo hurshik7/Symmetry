@@ -1,13 +1,16 @@
 body {
-    /*background-image: url("../images/5BGPortraitImage.jpg");*/
-    background-repeat: no-repeat, repeat;
-    background-size: cover;
-  }
+  background-repeat: no-repeat, repeat;
+  background-size: cover;
+}
 
-  .button_colour {
-    background-color: #e3f2fd;
-  }
+.button_colour {
+  background-color: #e3f2fd;
+}
 
-  #greeting_msg {
-    color: skyblue;
-  }
+#greeting_msg {
+  color: skyblue;
+}
+
+#nav-bar {
+  background-color: #e3f2fd;
+}

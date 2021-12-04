@@ -5,10 +5,10 @@
 * [Contents](#content)
 
 ## General Info
-This browser based web application to ...
-* Hello My name is Shey and I want to sleep
-* Hello My name is Shik and I like this project because this is first time having project
-* Hello My name is Ethan and this is a message
+This is a web-based browser appilcation named Symmetry. Symmetry is an organizational app designed for students.
+This app allows you to set up current assignments as cards and have them displayed. Cards can be edited, deleted, 
+and stored elsewhere. This app uses Firebase for the authentication, databases, and storage.
+
 	
 ## Technologies
 Technologies used for this project:
@@ -22,30 +22,49 @@ Content of the project folder:
 
 ```
  Top level of project folder: 
-├── .gitignore               # Git ignore file
-├── login.html               # landing HTML file, this is what users ├── main.html  
-├── profile.html
-├── setting.html    
-└── README.md
+├── .gitignore                      # Git ignore file
+├── 404.html                        # 404 html error page
+├── done.html                       # done page
+├── login.html                      # login page
+├── main.html                       # main page
+├── README.md                       # README file
+└── setting.html                    # setting page
 
 It has the following subfolders and files:
-├── .git                     # Folder for git repo
-├── images                   # Folder for images
-    logo.png                 # logo
-    snow_mountain2.jpg  
-├── scripts                  # Folder for scripts
-    main.js                         # 
-├── styles                   # Folder for styles
-    login.css                # 
-    main.css
+├── .git                            # Folder for git repo
+├── images                          # Folder for images
+    ├── 1BGPortraitImage.jpg        # 9 background images
+    ├── 2BGPortraitImage.jpg
+    ├── 3BGPortraitImage.jpg
+    ├── 4BGPortraitImage.jpg
+    ├── 5BGPortraitImage.jpg
+    ├── 6BGPortraitImage.jpg
+    ├── 7BGPortraitImage.jpg
+    ├── 8BGPortraitImage.jpg
+    ├── 9BGPortraitImage.jpg
+    ├── 9BGPortraitImage.jpg
+    └── logo.png                    # logo image
+├── scripts                         # Folder for scripts
+    ├── done.js                     # script file for done page
+    ├── firebaseAPI.js              # firebase API file
+    ├── login.js                    # script file for login page
+    ├── main.js                     # script file for main page
+    ├── populateImage.js            # script for populating background img
+    └── setting.js                  # script file for setting page
+├── sounds                          # Folder for sound files
+    ├── complete-assignment1.wav    #  
+    └── complete-assignment2.mp3    # sound file for the done sound effect
+├── styles                          # Folder for styles
+    ├── done.css                    # stylesheet for done page
+    ├── login.css                   # stylesheet for login page
+    ├── main.css                    # stylesheet for main page
+    └── setting.css                 # stylesheet for setting page
 
 Firebase hosting files: 
 ├── .firebaserc...
-
+├── firebase.json
+├── firestore.rules
+├── firestore.indexex.json
+└── storage.rules
 
 ```
-
-Tips for file naming files and folders:
-* use lowercase with no spaces
-* use dashes (not underscore) for word separation
-
